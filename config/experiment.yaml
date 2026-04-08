@@ -1,0 +1,87 @@
+# Experimental protocol (aligned with dissertation/DISSERTATION_PLAN.md §3.3.4)
+# Paths are relative to repository root unless absolute.
+
+dataset:
+  name: hotpotqa_distractor_dev
+  url: http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v1.json
+  sample_size: 150
+  sample_seed: 42
+  # 75 multi-hop bridge + 75 single-hop comparison (see plan §3.3.3)
+  strata:
+    bridge_multi_hop: 75
+    comparison_single_hop: 75
+
+pipelines:
+  V-RAG: { description: "Vanilla RAG: question → FAISS top-k → LLM" }
+  GQE-RAG: { description: "Naive graph expansion, no pruning" }
+  SP-GQE: { description: "Batch n-hop expansion → semantic prune → retrieval" }
+  SP-GQE-i: { description: "Iterative prune per hop (controlled expansion)" }
+  GR-RAG: { description: "Post-retrieval graph re-ranking" }
+  GF-RAG: { description: "Graph-filtered document selection" }
+
+fixed_parameters:
+  top_k: 5
+  llm_temperature: 0
+  embedding_model: nomic-embed-text
+  decomposition: spacy_noun_chunks
+
+# Experiment matrix IDs E1–E6 (see plan table): map here for batch runs
+runs:
+  - id: E1
+    pipeline: V-RAG
+  - id: E2a
+    pipeline: GQE-RAG
+    n_hops: 1
+  - id: E2b
+    pipeline: GQE-RAG
+    n_hops: 2
+  - id: E2c
+    pipeline: GQE-RAG
+    n_hops: 3
+  - id: E3a
+    pipeline: SP-GQE
+    n_hops: 1
+    tau: 0.3
+  - id: E3b
+    pipeline: SP-GQE
+    n_hops: 2
+    tau: 0.3
+  - id: E3c
+    pipeline: SP-GQE
+    n_hops: 2
+    tau: 0.5
+  - id: E3d
+    pipeline: SP-GQE
+    n_hops: 2
+    tau: 0.7
+  - id: E3e
+    pipeline: SP-GQE
+    n_hops: 3
+    tau: 0.5
+  - id: E4a
+    pipeline: SP-GQE-i
+    n_hops: 3
+    tau: 0.5
+  - id: E4b
+    pipeline: SP-GQE-i
+    n_hops: 5
+    tau: 0.5
+  - id: E4c
+    pipeline: SP-GQE-i
+    n_hops: 3
+    tau: 0.3
+  - id: E5
+    pipeline: GR-RAG
+    n_hops: 1
+  - id: E6
+    pipeline: GF-RAG
+    n_hops: 1
+
+metrics:
+  - answer_f1
+  - exact_match
+  - faithfulness
+  - context_relevance
+  - retrieval_precision_at_k
+  - expansion_prune_ratio
+  - latency_seconds

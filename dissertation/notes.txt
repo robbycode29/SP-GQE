@@ -1,0 +1,13 @@
+The (n, tau) pair (n - nth degree of graph node traversal, tau - graph node pruning factor)
+can be self regulating. (to be explored).
+
+The decision whether to further expand the search to the connections of a node or to remove an already
+added node by pruning in the Graph Expansion phase,
+can be taken individually per node based on tau, thus creating controlled expansion, a situation where relevant
+information is expanded upon and irrelevant information is pruned at node level, iteratively (compared to the initial
+approach which loaded a fixed set of node relations e.g. i=10, n=3 --> 1000 nodes and then pruned them all at once)
+thus allowing for a more focused trial and error search (like that of fungi or tree roots in search of nutrients or
+water)
+
+We can create a cool visual aid for the experimental result depicting the results (n, tau) heatmap overlaid with
+ground truth in a few of frames animation to depict the root type expansion search

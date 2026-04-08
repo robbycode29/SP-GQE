@@ -1,0 +1,15 @@
+# SP-GQE — core stack (see dissertation/DISSERTATION_PLAN.md §3.3.2)
+neo4j>=5.14.0
+faiss-cpu>=1.8.0
+numpy>=1.24.0
+spacy>=3.7.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+datasets>=2.16.0
+tqdm>=4.66.0
+
+# RAG / eval (install after core works)
+ragas>=0.1.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0

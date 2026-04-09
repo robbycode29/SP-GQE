@@ -10,6 +10,7 @@ Dissertation materials and the full research plan live under `[dissertation/](di
 | Path                     | Purpose                                                |
 | ------------------------ | ------------------------------------------------------ |
 | `src/sp_gqe/`            | Python package (pip install -e .)                      |
+| `src/sp_gqe/experiment/` | Hotpot loader, Neo4j graph, Ollama client, pipelines, metrics |
 | `config/experiment.yaml` | Experiment matrix, metrics, dataset sampling           |
 | `data/`                  | HotpotQA and derived artifacts (gitignored when large) |
 | `results/`               | Run outputs and tables                                 |
@@ -51,8 +52,20 @@ Dissertation materials and the full research plan live under `[dissertation/](di
 ## Experimental setup
 
 - **Protocol and hypotheses**: `dissertation/DISSERTATION_PLAN.md` (Section 3).
-- **Runnable config**: `config/experiment.yaml` — pipelines (V-RAG … GF-RAG), run IDs E1–E6, fixed parameters, metrics list.
-- **Implementation** will add data prep, KG construction, FAISS index, and pipeline scripts under `src/sp_gqe/` following that plan.
+- **Runnable config**: `config/experiment.yaml` — pipelines, run IDs, metrics.
+- **Run** (default: dissertation stack: Neo4j + Ollama when available):
+
+  ```powershell
+  $env:PYTHONPATH="src"
+  docker compose up -d
+  ollama pull mistral
+  ollama pull nomic-embed-text
+  .\.venv\Scripts\python.exe scripts\run_experiment.py --stack plan --sample-size 150 --out-dir results
+  ```
+
+  - `--stack plan`: Bolt graph (`Neo4jQuestionGraph`), `nomic-embed-text` embeddings, `mistral` answers, FAISS.
+  - `--stack local`: in-memory graph + `all-MiniLM-L6-v2` + extractive answers (fast, no Docker/Ollama).
+  - If Ollama is not running, `plan` falls back to MiniLM + extractive (see `plan_fallback` in `results/run_summary.json`).
 
 ## License
 

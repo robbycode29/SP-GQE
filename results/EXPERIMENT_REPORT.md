@@ -47,5 +47,3 @@ p_at_k
 | SubgraphRAG                                      | ICLR 2025; arXiv:2410.20724                            | Trained scorer vs our training-free pruning.                            |
 | RAG vs GraphRAG systematic study                 | arXiv:2502.11371 (Feb 2025)                            | Motivates hybrid / query-aware graph use (aligned with SP-GQE).         |
 | SP-GQE (this work)                               | Repository experiments                                 | Prototype stack: meant for ablations vs baselines under identical code. |
-
-

@@ -12,6 +12,8 @@ tqdm>=4.66.0
 sentence-transformers>=3.0.0
 scipy>=1.11.0
 matplotlib>=3.8.0
+networkx>=3.2.0
+rdflib>=7.0.0
 
 # RAG / eval (install after core works)
 ragas>=0.1.0

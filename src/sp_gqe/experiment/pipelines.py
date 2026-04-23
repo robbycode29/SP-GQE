@@ -16,9 +16,10 @@ from sp_gqe.experiment.embedder import Embedder, cosine_sim_matrix
 from sp_gqe.experiment.kg import CooccurrenceKG, norm_entity
 from sp_gqe.experiment.neo4j_graph import Neo4jQuestionGraph
 from sp_gqe.experiment.nlp_utils import extract_entities, noun_chunks
+from sp_gqe.experiment.rdf_graph import RdfQuestionGraph
 from sp_gqe.experiment.retrieval import FaissRetriever
 
-GraphBackend = Union[CooccurrenceKG, Neo4jQuestionGraph]
+GraphBackend = Union[CooccurrenceKG, Neo4jQuestionGraph, RdfQuestionGraph]
 EmbedLike = Union[Embedder, object]
 
 
@@ -132,12 +133,21 @@ def run_pipeline(
         return pred, ms, ctxs
 
     if name == "SP-GQE":
-        expanded = kg.n_hop_neighbors(seeds, n_hops)
-        expansion_raw = len(expanded) if expanded else 1
-        cand_list = [e for e in expanded if e not in seeds]
+        # Branch 1 — structural: SPARQL n-hop traversal from seed entities.
+        branch1 = kg.n_hop_neighbors(seeds, n_hops)
+        # Branch 2 — semantic: SPARQL keyword lookup driven by question noun chunks.
         probes = subqs[:12]
-        pv = embedder.encode(probes)
+        if hasattr(kg, "keyword_entities"):
+            branch2 = kg.keyword_entities(probes)
+        else:
+            branch2 = set()
+        # Fusion: (A ∪ B) minus seeds, then cosine-prune vs. reunion probes.
+        union = branch1 | branch2
+        expansion_raw = max(1, len(union))
+        cand_list = [e for e in union if e not in seeds]
+        reunion = [question] + probes
         if cand_list:
+            pv = embedder.encode(reunion)
             cv = embedder.encode(cand_list)
             sims = cosine_sim_matrix(cv, pv).max(axis=1)
             kept = [cand_list[i] for i in range(len(cand_list)) if sims[i] >= tau]

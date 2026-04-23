@@ -48,3 +48,24 @@ def retrieval_precision_at_k(
 
 def supporting_titles(example: dict) -> set[str]:
     return {t[0] for t in example.get("supporting_facts", [])}
+
+
+def chunk_title(chunk: str) -> str:
+    return chunk.split(".", 1)[0].strip().lower()
+
+
+def supporting_title_recall_at_k(
+    retrieved_chunks: list[str],
+    supporting_titles: set[str],
+    k: int,
+) -> float:
+    """Fraction of gold supporting paragraph titles that appear in top-k retrieved chunks."""
+    if not supporting_titles:
+        return 0.0
+    rt = {chunk_title(c) for c in retrieved_chunks[:k]}
+    hits = 0
+    for st in supporting_titles:
+        stl = st.strip().lower()
+        if any(stl in t or t in stl for t in rt):
+            hits += 1
+    return hits / len(supporting_titles)

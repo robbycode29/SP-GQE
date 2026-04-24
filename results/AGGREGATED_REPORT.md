@@ -1,25 +1,29 @@
-# Aggregated results — 6 per-seed files
+# Aggregated results — 16 per-seed files
 
-- **Total question instances:** 150
-- **Seeds aggregated:** 2026-04-23:seed42(n=25), 2026-04-23:seed43(n=25), 2026-04-23:seed44(n=25), 2026-04-23:seed45(n=25), 2026-04-23:seed46(n=25), 2026-04-23:seed47(n=25)
+- **Total question instances:** 387
+- **Seeds aggregated:** 2026-04-23:seed42(n=25), 2026-04-23:seed43(n=25), 2026-04-23:seed44(n=25), 2026-04-23:seed45(n=25), 2026-04-23:seed46(n=25), 2026-04-23:seed47(n=25), 2026-04-24:seed48(n=15), 2026-04-24:seed49(n=25), 2026-04-24:seed50(n=25), 2026-04-24:seed51(n=25), 2026-04-24:seed52(n=25), 2026-04-24:seed53(n=25), 2026-04-24:seed54(n=25), 2026-04-24:seed55(n=25), 2026-04-24:seed56(n=25), 2026-04-24:seed57(n=22)
 
 ## Per-pipeline (mean ± 95% CI across seed-level means)
 
-| Pipeline | Mean F1 | 95% CI F1 | Mean EM | Mean Sup-Title Recall@k | Mean P@k | n seeds |
-|----------|---------|-----------|---------|-------------------------|----------|---------|
-| V-RAG | 0.5419 | [0.4262, 0.6575] | 0.4467 | 0.7967 | 0.7053 | 6 |
-| GQE-RAG(n=2) | 0.5727 | [0.4808, 0.6645] | 0.4733 | 0.7900 | 0.6760 | 6 |
-| SP-GQE(n=2,τ=0.5) | 0.5401 | [0.4645, 0.6156] | 0.4533 | 0.7633 | 0.6640 | 6 |
-| SP-GQE-i(n=3,τ=0.5) | 0.5374 | [0.4762, 0.5986] | 0.4533 | 0.7800 | 0.6960 | 6 |
-| GR-RAG | 0.5652 | [0.4484, 0.6820] | 0.4667 | 0.7967 | 0.7053 | 6 |
-| GF-RAG | 0.5451 | [0.4565, 0.6336] | 0.4600 | 0.7533 | 0.6573 | 6 |
+
+| Pipeline            | Mean F1 | 95% CI F1        | Mean EM | Mean Sup-Title Recall@k | Mean P@k | n seeds |
+| ------------------- | ------- | ---------------- | ------- | ----------------------- | -------- | ------- |
+| V-RAG               | 0.5506  | [0.5062, 0.5949] | 0.4422  | 0.7793                  | 0.6735   | 16      |
+| GQE-RAG(n=2)        | 0.5642  | [0.5167, 0.6118] | 0.4564  | 0.7905                  | 0.6605   | 16      |
+| SP-GQE(n=2,τ=0.5)   | 0.5305  | [0.4930, 0.5680] | 0.4341  | 0.7687                  | 0.6378   | 16      |
+| SP-GQE-i(n=3,τ=0.5) | 0.5448  | [0.5073, 0.5824] | 0.4556  | 0.7722                  | 0.6621   | 16      |
+| GR-RAG              | 0.5560  | [0.5118, 0.6002] | 0.4472  | 0.7793                  | 0.6735   | 16      |
+| GF-RAG              | 0.5478  | [0.5149, 0.5808] | 0.4429  | 0.7402                  | 0.6334   | 16      |
+
 
 ## Paired ΔF1 (SP-GQE(n=2, τ=0.5) − V-RAG) pooled across seeds
 
-| Subset | Mean Δ | Bootstrap 95% CI | n pairs |
-|--------|--------|------------------|---------|
-| bridge | 0.0160 | [-0.0404, 0.0756] | 72 |
-| comparison | -0.0182 | [-0.0877, 0.0474] | 78 |
+
+| Subset     | Mean Δ  | Bootstrap 95% CI  | n pairs |
+| ---------- | ------- | ----------------- | ------- |
+| bridge     | -0.0136 | [-0.0487, 0.0210] | 186     |
+| comparison | -0.0247 | [-0.0648, 0.0149] | 201     |
+
 
 ## Graph-query validity (ablation, pooled per question)
 
@@ -30,11 +34,13 @@
 - **Union:** the candidate pool that enters the τ pruner (before pruning).
 - **Kept after τ=0.5:** the entities actually fed into the augmented FAISS query.
 
-| Stage | Mean precision | Mean recall | n questions |
-|-------|----------------|-------------|-------------|
-| Branch 1 (n-hop) | 0.3507 | 0.6056 | 150 |
-| Branch 2 (keyword) | 0.3981 | 0.1799 | 150 |
-| Union | 0.3121 | 0.6462 | 150 |
-| Kept after τ=0.5 | 0.4545 | 0.2143 | 150 |
+
+| Stage              | Mean precision | Mean recall | n questions |
+| ------------------ | -------------- | ----------- | ----------- |
+| Branch 1 (n-hop)   | 0.3352         | 0.5931      | 387         |
+| Branch 2 (keyword) | 0.3813         | 0.1703      | 387         |
+| Union              | 0.3072         | 0.6339      | 387         |
+| Kept after τ=0.5   | 0.4479         | 0.2189      | 387         |
+
 
 Interpretation: a rise in precision from Union → Kept indicates that the cosine-to-reunion pruner is removing noise; any drop in recall is the cost of that filtering. Branch 1 vs Branch 2 shows whether the two SPARQL queries are complementary (high union recall vs each branch alone) or redundant.

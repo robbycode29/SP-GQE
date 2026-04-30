@@ -4,7 +4,7 @@
 dataset:
   name: hotpotqa_distractor_dev
   url: http://curtis.ml.cmu.edu/datasets/hotpot/hotpot_dev_distractor_v1.json
-  sample_size: 150
+  sample_size: 25
   sample_seed: 42
   # 75 multi-hop bridge + 75 single-hop comparison (see plan §3.3.3)
   strata:

@@ -10,6 +10,7 @@ __pycache__/
 *.log
 data/raw/
 data/processed/
+data/.groq_quota_state.json
 results/runs/
 *.faiss
 *.pkl

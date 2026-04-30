@@ -1,0 +1,2259 @@
+{
+  "date_utc": "2026-04-23",
+  "seed": 42,
+  "sample_size": 3,
+  "stack": "local",
+  "llm_backend": "local_extractive",
+  "top_k": 5,
+  "pipelines": {
+    "V-RAG": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.8333333333333334,
+      "mean_retrieval_p_at_k": 0.6
+    },
+    "GQE-RAG(n=2)": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.8333333333333334,
+      "mean_retrieval_p_at_k": 0.6666666666666666
+    },
+    "SP-GQE(n=2,τ=0.5)": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.6666666666666666,
+      "mean_retrieval_p_at_k": 0.6
+    },
+    "SP-GQE-i(n=3,τ=0.5)": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.6666666666666666,
+      "mean_retrieval_p_at_k": 0.6666666666666666
+    },
+    "GR-RAG": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.8333333333333334,
+      "mean_retrieval_p_at_k": 0.6
+    },
+    "GF-RAG": {
+      "mean_f1": 0.0,
+      "std_f1": 0.0,
+      "mean_em": 0.0,
+      "mean_supporting_title_recall_at_k": 0.8333333333333334,
+      "mean_retrieval_p_at_k": 0.8000000000000002
+    }
+  },
+  "paired_deltas": {
+    "bridge": [
+      {
+        "v_rag_f1": 0.0,
+        "sp_gqe_f1": 0.0,
+        "delta_f1": 0.0
+      }
+    ],
+    "comparison": [
+      {
+        "v_rag_f1": 0.0,
+        "sp_gqe_f1": 0.0,
+        "delta_f1": 0.0
+      },
+      {
+        "v_rag_f1": 0.0,
+        "sp_gqe_f1": 0.0,
+        "delta_f1": 0.0
+      }
+    ]
+  },
+  "graph_query_log": [
+    {
+      "qid": "5a84f06f5542994c784dda92",
+      "type": "comparison",
+      "question": "What type of community does Bob Hope Airport and Boeing Field have in common?",
+      "gold_answer": "public",
+      "sp_gqe_f1": 0.0,
+      "v_rag_f1": 0.0,
+      "seeds": [
+        "bob hope airport",
+        "boeing field"
+      ],
+      "probes": [
+        "What type",
+        "community",
+        "Bob Hope Airport",
+        "Boeing Field"
+      ],
+      "n_hops": 2,
+      "tau": 0.5,
+      "branch1_sparql_nhop": "PREFIX spg: <http://spgqe.local/>\nSELECT DISTINCT ?t WHERE {\n  VALUES ?s { <http://spgqe.local/e#bob_hope_airport> <http://spgqe.local/e#boeing_field> }\n  { ?s spg:coOccurs ?t } UNION\n  { ?s spg:coOccurs/spg:coOccurs ?t }\n}",
+      "branch1_returned": [
+        "17",
+        "1936",
+        "3",
+        "air force plant",
+        "amtrak",
+        "bfi",
+        "bob hope airport",
+        "boeing field",
+        "boeing plant 2",
+        "bur",
+        "burbank",
+        "burbank airport",
+        "burbank-bob hope airport",
+        "california",
+        "chu-lin",
+        "daily",
+        "faa",
+        "five miles",
+        "greenville",
+        "hollywood burbank airport",
+        "iata",
+        "jetblue airways",
+        "jetblue flight 292",
+        "john f. kennedy",
+        "kbfi",
+        "kcia",
+        "king county",
+        "king county international airport",
+        "los angeles",
+        "los angeles county",
+        "los angeles union station",
+        "mark",
+        "metrolink",
+        "mississippi",
+        "new york city",
+        "phoenix",
+        "san diego",
+        "san luis obispo",
+        "seattle",
+        "several miles",
+        "the age of 67",
+        "the boeing corporation",
+        "the duwamish river",
+        "the united states",
+        "united states",
+        "ventura",
+        "ventura county line",
+        "washington"
+      ],
+      "branch1_returned_n": 48,
+      "branch2_sparql_keyword": "PREFIX spg: <http://spgqe.local/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?e ?label WHERE {\n  ?e a spg:Entity ; rdfs:label ?label .\n  FILTER(CONTAINS(LCASE(STR(?label)), \"type\") || CONTAINS(LCASE(STR(?label)), \"community\") || CONTAINS(LCASE(STR(?label)), \"bob\") || CONTAINS(LCASE(STR(?label)), \"hope\") || CONTAINS(LCASE(STR(?label)), \"airport\") || CONTAINS(LCASE(STR(?label)), \"boeing\") || CONTAINS(LCASE(STR(?label)), \"field\"))\n}",
+      "branch2_returned": [
+        "bob hope",
+        "bob hope airport",
+        "bob hope patriotic hall",
+        "bob hope school",
+        "bob hope's",
+        "boeing",
+        "boeing 737s",
+        "boeing field",
+        "boeing plant 2",
+        "burbank airport",
+        "burbank-bob hope airport",
+        "hollywood burbank airport",
+        "hope & company",
+        "judith richards hope",
+        "king county international airport",
+        "los angeles international airport",
+        "the boeing b-17 flying fortresses",
+        "the boeing corporation",
+        "tony hope",
+        "william e. boeing"
+      ],
+      "branch2_returned_n": 20,
+      "union_returned": [
+        "17",
+        "1936",
+        "3",
+        "air force plant",
+        "amtrak",
+        "bfi",
+        "bob hope",
+        "bob hope airport",
+        "bob hope patriotic hall",
+        "bob hope school",
+        "bob hope's",
+        "boeing",
+        "boeing 737s",
+        "boeing field",
+        "boeing plant 2",
+        "bur",
+        "burbank",
+        "burbank airport",
+        "burbank-bob hope airport",
+        "california",
+        "chu-lin",
+        "daily",
+        "faa",
+        "five miles",
+        "greenville",
+        "hollywood burbank airport",
+        "hope & company",
+        "iata",
+        "jetblue airways",
+        "jetblue flight 292",
+        "john f. kennedy",
+        "judith richards hope",
+        "kbfi",
+        "kcia",
+        "king county",
+        "king county international airport",
+        "los angeles",
+        "los angeles county",
+        "los angeles international airport",
+        "los angeles union station",
+        "mark",
+        "metrolink",
+        "mississippi",
+        "new york city",
+        "phoenix",
+        "san diego",
+        "san luis obispo",
+        "seattle",
+        "several miles",
+        "the age of 67",
+        "the boeing b-17 flying fortresses",
+        "the boeing corporation",
+        "the duwamish river",
+        "the united states",
+        "tony hope",
+        "united states",
+        "ventura",
+        "ventura county line",
+        "washington",
+        "william e. boeing"
+      ],
+      "returned_n": 60,
+      "per_candidate_similarity": [
+        [
+          "los angeles",
+          0.2974
+        ],
+        [
+          "kcia",
+          0.3045
+        ],
+        [
+          "bob hope",
+          0.7238
+        ],
+        [
+          "boeing",
+          0.7884
+        ],
+        [
+          "the age of 67",
+          0.1582
+        ],
+        [
+          "hope & company",
+          0.4355
+        ],
+        [
+          "king county",
+          0.2495
+        ],
+        [
+          "bur",
+          0.3064
+        ],
+        [
+          "judith richards hope",
+          0.3681
+        ],
+        [
+          "california",
+          0.3129
+        ],
+        [
+          "burbank",
+          0.2683
+        ],
+        [
+          "17",
+          0.2951
+        ],
+        [
+          "faa",
+          0.4939
+        ],
+        [
+          "bob hope patriotic hall",
+          0.5783
+        ],
+        [
+          "3",
+          0.3507
+        ],
+        [
+          "the united states",
+          0.255
+        ],
+        [
+          "san luis obispo",
+          0.203
+        ],
+        [
+          "john f. kennedy",
+          0.2308
+        ],
+        [
+          "tony hope",
+          0.4302
+        ],
+        [
+          "united states",
+          0.2734
+        ],
+        [
+          "seattle",
+          0.301
+        ],
+        [
+          "phoenix",
+          0.3035
+        ],
+        [
+          "the boeing b-17 flying fortresses",
+          0.5686
+        ],
+        [
+          "daily",
+          0.3503
+        ],
+        [
+          "los angeles county",
+          0.2295
+        ],
+        [
+          "1936",
+          0.2143
+        ],
+        [
+          "burbank-bob hope airport",
+          0.8449
+        ],
+        [
+          "greenville",
+          0.3634
+        ],
+        [
+          "ventura",
+          0.3564
+        ],
+        [
+          "the duwamish river",
+          0.1638
+        ],
+        [
+          "air force plant",
+          0.4388
+        ],
+        [
+          "metrolink",
+          0.2604
+        ],
+        [
+          "william e. boeing",
+          0.6209
+        ],
+        [
+          "jetblue airways",
+          0.4538
+        ],
+        [
+          "mark",
+          0.314
+        ],
+        [
+          "ventura county line",
+          0.239
+        ],
+        [
+          "washington",
+          0.2872
+        ],
+        [
+          "jetblue flight 292",
+          0.3948
+        ],
+        [
+          "kbfi",
+          0.239
+        ],
+        [
+          "bob hope's",
+          0.7045
+        ],
+        [
+          "bob hope school",
+          0.6656
+        ],
+        [
+          "amtrak",
+          0.2729
+        ],
+        [
+          "new york city",
+          0.2946
+        ],
+        [
+          "mississippi",
+          0.2744
+        ],
+        [
+          "los angeles union station",
+          0.2739
+        ],
+        [
+          "chu-lin",
+          0.2019
+        ],
+        [
+          "five miles",
+          0.2288
+        ],
+        [
+          "los angeles international airport",
+          0.4647
+        ],
+        [
+          "several miles",
+          0.2368
+        ],
+        [
+          "iata",
+          0.4055
+        ],
+        [
+          "hollywood burbank airport",
+          0.5236
+        ],
+        [
+          "king county international airport",
+          0.5058
+        ],
+        [
+          "boeing plant 2",
+          0.6398
+        ],
+        [
+          "burbank airport",
+          0.554
+        ],
+        [
+          "san diego",
+          0.2497
+        ],
+        [
+          "the boeing corporation",
+          0.7312
+        ],
+        [
+          "bfi",
+          0.2827
+        ],
+        [
+          "boeing 737s",
+          0.5746
+        ]
+      ],
+      "kept_tau": [
+        "bob hope",
+        "bob hope airport",
+        "bob hope patriotic hall",
+        "bob hope school",
+        "bob hope's",
+        "boeing",
+        "boeing 737s",
+        "boeing field",
+        "boeing plant 2",
+        "burbank airport",
+        "burbank-bob hope airport",
+        "hollywood burbank airport",
+        "king county international airport",
+        "the boeing b-17 flying fortresses",
+        "the boeing corporation",
+        "william e. boeing"
+      ],
+      "kept_n": 16,
+      "subgraph_spotlight_nodes": [
+        "17",
+        "1936",
+        "3",
+        "air force plant",
+        "amtrak",
+        "bfi",
+        "bob hope",
+        "bob hope airport",
+        "bob hope patriotic hall",
+        "bob hope school",
+        "bob hope's",
+        "boeing",
+        "boeing 737s",
+        "boeing field",
+        "boeing plant 2",
+        "bur",
+        "burbank",
+        "burbank airport",
+        "burbank-bob hope airport",
+        "california",
+        "chu-lin",
+        "daily",
+        "faa",
+        "five miles",
+        "greenville",
+        "hollywood burbank airport",
+        "hope & company",
+        "iata",
+        "jetblue airways",
+        "jetblue flight 292",
+        "john f. kennedy",
+        "judith richards hope",
+        "kbfi",
+        "kcia",
+        "king county",
+        "king county international airport",
+        "los angeles",
+        "los angeles county",
+        "los angeles international airport",
+        "los angeles union station",
+        "mark",
+        "metrolink",
+        "mississippi",
+        "new york city",
+        "phoenix",
+        "san diego",
+        "san luis obispo",
+        "seattle",
+        "several miles",
+        "the age of 67",
+        "the boeing b-17 flying fortresses",
+        "the boeing corporation",
+        "the duwamish river",
+        "the united states",
+        "tony hope",
+        "united states",
+        "ventura",
+        "ventura county line",
+        "washington",
+        "william e. boeing"
+      ],
+      "cooccurrence_edges": [
+        [
+          "17",
+          "1936"
+        ],
+        [
+          "17",
+          "air force plant"
+        ],
+        [
+          "17",
+          "boeing plant 2"
+        ],
+        [
+          "17",
+          "king county"
+        ],
+        [
+          "17",
+          "the boeing corporation"
+        ],
+        [
+          "17",
+          "the united states"
+        ],
+        [
+          "17",
+          "washington"
+        ],
+        [
+          "1936",
+          "air force plant"
+        ],
+        [
+          "1936",
+          "boeing plant 2"
+        ],
+        [
+          "1936",
+          "king county"
+        ],
+        [
+          "1936",
+          "the boeing corporation"
+        ],
+        [
+          "1936",
+          "the united states"
+        ],
+        [
+          "1936",
+          "washington"
+        ],
+        [
+          "3",
+          "bob hope airport"
+        ],
+        [
+          "3",
+          "bur"
+        ],
+        [
+          "3",
+          "burbank"
+        ],
+        [
+          "3",
+          "california"
+        ],
+        [
+          "3",
+          "faa"
+        ],
+        [
+          "3",
+          "hollywood burbank airport"
+        ],
+        [
+          "3",
+          "iata"
+        ],
+        [
+          "3",
+          "los angeles county"
+        ],
+        [
+          "air force plant",
+          "boeing plant 2"
+        ],
+        [
+          "air force plant",
+          "king county"
+        ],
+        [
+          "air force plant",
+          "the boeing corporation"
+        ],
+        [
+          "air force plant",
+          "the united states"
+        ],
+        [
+          "air force plant",
+          "washington"
+        ],
+        [
+          "amtrak",
+          "bob hope airport"
+        ],
+        [
+          "amtrak",
+          "burbank"
+        ],
+        [
+          "amtrak",
+          "burbank airport"
+        ],
+        [
+          "amtrak",
+          "burbank-bob hope airport"
+        ],
+        [
+          "amtrak",
+          "california"
+        ],
+        [
+          "amtrak",
+          "los angeles"
+        ],
+        [
+          "amtrak",
+          "los angeles union station"
+        ],
+        [
+          "amtrak",
+          "metrolink"
+        ],
+        [
+          "amtrak",
+          "san diego"
+        ],
+        [
+          "amtrak",
+          "san luis obispo"
+        ],
+        [
+          "amtrak",
+          "seattle"
+        ],
+        [
+          "amtrak",
+          "several miles"
+        ],
+        [
+          "amtrak",
+          "ventura"
+        ],
+        [
+          "amtrak",
+          "ventura county line"
+        ],
+        [
+          "amtrak",
+          "washington"
+        ],
+        [
+          "bfi",
+          "boeing field"
+        ],
+        [
+          "bfi",
+          "faa"
+        ],
+        [
+          "bfi",
+          "five miles"
+        ],
+        [
+          "bfi",
+          "iata"
+        ],
+        [
+          "bfi",
+          "kbfi"
+        ],
+        [
+          "bfi",
+          "king county"
+        ],
+        [
+          "bfi",
+          "king county international airport"
+        ],
+        [
+          "bfi",
+          "seattle"
+        ],
+        [
+          "bfi",
+          "washington"
+        ],
+        [
+          "bob hope",
+          "bob hope patriotic hall"
+        ],
+        [
+          "bob hope",
+          "bob hope's"
+        ],
+        [
+          "bob hope",
+          "tony hope"
+        ],
+        [
+          "bob hope airport",
+          "bur"
+        ],
+        [
+          "bob hope airport",
+          "burbank"
+        ],
+        [
+          "bob hope airport",
+          "burbank airport"
+        ],
+        [
+          "bob hope airport",
+          "burbank-bob hope airport"
+        ],
+        [
+          "bob hope airport",
+          "california"
+        ],
+        [
+          "bob hope airport",
+          "faa"
+        ],
+        [
+          "bob hope airport",
+          "hollywood burbank airport"
+        ],
+        [
+          "bob hope airport",
+          "iata"
+        ],
+        [
+          "bob hope airport",
+          "jetblue flight 292"
+        ],
+        [
+          "bob hope airport",
+          "john f. kennedy"
+        ],
+        [
+          "bob hope airport",
+          "los angeles county"
+        ],
+        [
+          "bob hope airport",
+          "mark"
+        ],
+        [
+          "bob hope airport",
+          "metrolink"
+        ],
+        [
+          "bob hope airport",
+          "new york city"
+        ],
+        [
+          "bob hope airport",
+          "phoenix"
+        ],
+        [
+          "bob hope airport",
+          "several miles"
+        ],
+        [
+          "bob hope's",
+          "tony hope"
+        ],
+        [
+          "boeing",
+          "boeing 737s"
+        ],
+        [
+          "boeing",
+          "the boeing b-17 flying fortresses"
+        ],
+        [
+          "boeing",
+          "william e. boeing"
+        ],
+        [
+          "boeing 737s",
+          "the boeing b-17 flying fortresses"
+        ],
+        [
+          "boeing field",
+          "faa"
+        ],
+        [
+          "boeing field",
+          "five miles"
+        ],
+        [
+          "boeing field",
+          "iata"
+        ],
+        [
+          "boeing field",
+          "kbfi"
+        ],
+        [
+          "boeing field",
+          "kcia"
+        ],
+        [
+          "boeing field",
+          "king county"
+        ],
+        [
+          "boeing field",
+          "king county international airport"
+        ],
+        [
+          "boeing field",
+          "seattle"
+        ],
+        [
+          "boeing field",
+          "the duwamish river"
+        ],
+        [
+          "boeing field",
+          "washington"
+        ],
+        [
+          "boeing plant 2",
+          "king county"
+        ],
+        [
+          "boeing plant 2",
+          "the boeing corporation"
+        ],
+        [
+          "boeing plant 2",
+          "the united states"
+        ],
+        [
+          "boeing plant 2",
+          "washington"
+        ],
+        [
+          "bur",
+          "burbank"
+        ],
+        [
+          "bur",
+          "california"
+        ],
+        [
+          "bur",
+          "faa"
+        ],
+        [
+          "bur",
+          "hollywood burbank airport"
+        ],
+        [
+          "bur",
+          "iata"
+        ],
+        [
+          "bur",
+          "los angeles county"
+        ],
+        [
+          "burbank",
+          "burbank airport"
+        ],
+        [
+          "burbank",
+          "burbank-bob hope airport"
+        ],
+        [
+          "burbank",
+          "california"
+        ],
+        [
+          "burbank",
+          "chu-lin"
+        ],
+        [
+          "burbank",
+          "faa"
+        ],
+        [
+          "burbank",
+          "greenville"
+        ],
+        [
+          "burbank",
+          "hollywood burbank airport"
+        ],
+        [
+          "burbank",
+          "iata"
+        ],
+        [
+          "burbank",
+          "jetblue flight 292"
+        ],
+        [
+          "burbank",
+          "john f. kennedy"
+        ],
+        [
+          "burbank",
+          "los angeles county"
+        ],
+        [
+          "burbank",
+          "mark"
+        ],
+        [
+          "burbank",
+          "metrolink"
+        ],
+        [
+          "burbank",
+          "mississippi"
+        ],
+        [
+          "burbank",
+          "new york city"
+        ],
+        [
+          "burbank",
+          "phoenix"
+        ],
+        [
+          "burbank",
+          "several miles"
+        ],
+        [
+          "burbank",
+          "the age of 67"
+        ],
+        [
+          "burbank airport",
+          "several miles"
+        ],
+        [
+          "burbank-bob hope airport",
+          "california"
+        ],
+        [
+          "burbank-bob hope airport",
+          "metrolink"
+        ],
+        [
+          "california",
+          "chu-lin"
+        ],
+        [
+          "california",
+          "faa"
+        ],
+        [
+          "california",
+          "greenville"
+        ],
+        [
+          "california",
+          "hollywood burbank airport"
+        ],
+        [
+          "california",
+          "iata"
+        ],
+        [
+          "california",
+          "jetblue flight 292"
+        ],
+        [
+          "california",
+          "john f. kennedy"
+        ],
+        [
+          "california",
+          "los angeles county"
+        ],
+        [
+          "california",
+          "metrolink"
+        ],
+        [
+          "california",
+          "mississippi"
+        ],
+        [
+          "california",
+          "new york city"
+        ],
+        [
+          "california",
+          "the age of 67"
+        ],
+        [
+          "chu-lin",
+          "greenville"
+        ],
+        [
+          "chu-lin",
+          "mississippi"
+        ],
+        [
+          "chu-lin",
+          "the age of 67"
+        ],
+        [
+          "daily",
+          "jetblue airways"
+        ],
+        [
+          "daily",
+          "new york city"
+        ],
+        [
+          "daily",
+          "united states"
+        ],
+        [
+          "faa",
+          "five miles"
+        ],
+        [
+          "faa",
+          "hollywood burbank airport"
+        ],
+        [
+          "faa",
+          "iata"
+        ],
+        [
+          "faa",
+          "kbfi"
+        ],
+        [
+          "faa",
+          "king county"
+        ],
+        [
+          "faa",
+          "king county international airport"
+        ],
+        [
+          "faa",
+          "los angeles county"
+        ],
+        [
+          "faa",
+          "seattle"
+        ],
+        [
+          "faa",
+          "washington"
+        ],
+        [
+          "five miles",
+          "iata"
+        ],
+        [
+          "five miles",
+          "kbfi"
+        ],
+        [
+          "five miles",
+          "king county"
+        ],
+        [
+          "five miles",
+          "king county international airport"
+        ],
+        [
+          "five miles",
+          "seattle"
+        ],
+        [
+          "five miles",
+          "washington"
+        ],
+        [
+          "greenville",
+          "mississippi"
+        ],
+        [
+          "greenville",
+          "the age of 67"
+        ],
+        [
+          "hollywood burbank airport",
+          "iata"
+        ],
+        [
+          "hollywood burbank airport",
+          "los angeles county"
+        ],
+        [
+          "iata",
+          "kbfi"
+        ],
+        [
+          "iata",
+          "king county"
+        ],
+        [
+          "iata",
+          "king county international airport"
+        ],
+        [
+          "iata",
+          "los angeles county"
+        ],
+        [
+          "iata",
+          "seattle"
+        ],
+        [
+          "iata",
+          "washington"
+        ],
+        [
+          "jetblue airways",
+          "new york city"
+        ],
+        [
+          "jetblue airways",
+          "united states"
+        ],
+        [
+          "jetblue flight 292",
+          "john f. kennedy"
+        ],
+        [
+          "jetblue flight 292",
+          "new york city"
+        ],
+        [
+          "john f. kennedy",
+          "new york city"
+        ],
+        [
+          "kbfi",
+          "king county"
+        ],
+        [
+          "kbfi",
+          "king county international airport"
+        ],
+        [
+          "kbfi",
+          "seattle"
+        ],
+        [
+          "kbfi",
+          "washington"
+        ],
+        [
+          "king county",
+          "king county international airport"
+        ],
+        [
+          "king county",
+          "seattle"
+        ],
+        [
+          "king county",
+          "the boeing corporation"
+        ],
+        [
+          "king county",
+          "the united states"
+        ],
+        [
+          "king county",
+          "washington"
+        ],
+        [
+          "king county international airport",
+          "seattle"
+        ],
+        [
+          "king county international airport",
+          "washington"
+        ],
+        [
+          "los angeles",
+          "los angeles international airport"
+        ],
+        [
+          "los angeles",
+          "seattle"
+        ],
+        [
+          "los angeles",
+          "washington"
+        ],
+        [
+          "los angeles union station",
+          "metrolink"
+        ],
+        [
+          "los angeles union station",
+          "san diego"
+        ],
+        [
+          "los angeles union station",
+          "san luis obispo"
+        ],
+        [
+          "los angeles union station",
+          "ventura"
+        ],
+        [
+          "los angeles union station",
+          "ventura county line"
+        ],
+        [
+          "mark",
+          "phoenix"
+        ],
+        [
+          "metrolink",
+          "san diego"
+        ],
+        [
+          "metrolink",
+          "san luis obispo"
+        ],
+        [
+          "metrolink",
+          "ventura"
+        ],
+        [
+          "metrolink",
+          "ventura county line"
+        ],
+        [
+          "mississippi",
+          "the age of 67"
+        ],
+        [
+          "new york city",
+          "united states"
+        ],
+        [
+          "san diego",
+          "san luis obispo"
+        ],
+        [
+          "san diego",
+          "ventura"
+        ],
+        [
+          "san diego",
+          "ventura county line"
+        ],
+        [
+          "san luis obispo",
+          "ventura"
+        ],
+        [
+          "san luis obispo",
+          "ventura county line"
+        ],
+        [
+          "seattle",
+          "washington"
+        ],
+        [
+          "the boeing corporation",
+          "the united states"
+        ],
+        [
+          "the boeing corporation",
+          "washington"
+        ],
+        [
+          "the united states",
+          "washington"
+        ],
+        [
+          "ventura",
+          "ventura county line"
+        ]
+      ],
+      "entity_uri_by_label": {
+        "los angeles": "http://spgqe.local/e#los_angeles",
+        "kcia": "http://spgqe.local/e#kcia",
+        "bob hope": "http://spgqe.local/e#bob_hope",
+        "burbank airport": "http://spgqe.local/e#burbank_airport",
+        "boeing": "http://spgqe.local/e#boeing",
+        "the age of 67": "http://spgqe.local/e#the_age_of_67",
+        "hope & company": "http://spgqe.local/e#hope_company",
+        "king county": "http://spgqe.local/e#king_county",
+        "bur": "http://spgqe.local/e#bur",
+        "judith richards hope": "http://spgqe.local/e#judith_richards_hope",
+        "california": "http://spgqe.local/e#california",
+        "burbank": "http://spgqe.local/e#burbank",
+        "17": "http://spgqe.local/e#17",
+        "faa": "http://spgqe.local/e#faa",
+        "bob hope patriotic hall": "http://spgqe.local/e#bob_hope_patriotic_hall",
+        "3": "http://spgqe.local/e#3",
+        "the united states": "http://spgqe.local/e#the_united_states",
+        "san luis obispo": "http://spgqe.local/e#san_luis_obispo",
+        "john f. kennedy": "http://spgqe.local/e#john_f_kennedy",
+        "tony hope": "http://spgqe.local/e#tony_hope",
+        "united states": "http://spgqe.local/e#united_states",
+        "seattle": "http://spgqe.local/e#seattle",
+        "phoenix": "http://spgqe.local/e#phoenix",
+        "daily": "http://spgqe.local/e#daily",
+        "los angeles county": "http://spgqe.local/e#los_angeles_county",
+        "boeing field": "http://spgqe.local/e#boeing_field",
+        "burbank-bob hope airport": "http://spgqe.local/e#burbank_bob_hope_airport",
+        "greenville": "http://spgqe.local/e#greenville",
+        "ventura": "http://spgqe.local/e#ventura",
+        "the duwamish river": "http://spgqe.local/e#the_duwamish_river",
+        "air force plant": "http://spgqe.local/e#air_force_plant",
+        "metrolink": "http://spgqe.local/e#metrolink",
+        "william e. boeing": "http://spgqe.local/e#william_e_boeing",
+        "bfi": "http://spgqe.local/e#bfi",
+        "jetblue airways": "http://spgqe.local/e#jetblue_airways",
+        "mark": "http://spgqe.local/e#mark",
+        "ventura county line": "http://spgqe.local/e#ventura_county_line",
+        "washington": "http://spgqe.local/e#washington",
+        "jetblue flight 292": "http://spgqe.local/e#jetblue_flight_292",
+        "kbfi": "http://spgqe.local/e#kbfi",
+        "bob hope's": "http://spgqe.local/e#bob_hope_s",
+        "bob hope school": "http://spgqe.local/e#bob_hope_school",
+        "amtrak": "http://spgqe.local/e#amtrak",
+        "new york city": "http://spgqe.local/e#new_york_city",
+        "mississippi": "http://spgqe.local/e#mississippi",
+        "los angeles union station": "http://spgqe.local/e#los_angeles_union_station",
+        "chu-lin": "http://spgqe.local/e#chu_lin",
+        "five miles": "http://spgqe.local/e#five_miles",
+        "los angeles international airport": "http://spgqe.local/e#los_angeles_international_airport",
+        "bob hope airport": "http://spgqe.local/e#bob_hope_airport",
+        "several miles": "http://spgqe.local/e#several_miles",
+        "iata": "http://spgqe.local/e#iata",
+        "hollywood burbank airport": "http://spgqe.local/e#hollywood_burbank_airport",
+        "king county international airport": "http://spgqe.local/e#king_county_international_airport",
+        "boeing plant 2": "http://spgqe.local/e#boeing_plant_2",
+        "1936": "http://spgqe.local/e#1936",
+        "san diego": "http://spgqe.local/e#san_diego",
+        "the boeing b-17 flying fortresses": "http://spgqe.local/e#the_boeing_b_17_flying_fortresses",
+        "the boeing corporation": "http://spgqe.local/e#the_boeing_corporation",
+        "boeing 737s": "http://spgqe.local/e#boeing_737s"
+      },
+      "supporting_titles": [
+        "Bob Hope Airport",
+        "Boeing Field"
+      ],
+      "supporting_entities": [
+        "3",
+        "bfi",
+        "bob hope airport",
+        "boeing",
+        "boeing field",
+        "bur",
+        "burbank",
+        "california",
+        "daily",
+        "faa",
+        "five miles",
+        "glendale",
+        "greater los angeles",
+        "griffith park",
+        "hollywood",
+        "hollywood burbank airport",
+        "iata",
+        "jetblue airways",
+        "kbfi",
+        "kcia",
+        "king county",
+        "king county international airport",
+        "los angeles",
+        "los angeles county",
+        "los angeles international airport",
+        "new york city",
+        "pasadena",
+        "seattle",
+        "the san fernando valley",
+        "united states",
+        "washington",
+        "william e. boeing"
+      ],
+      "validity": {
+        "supporting_entities_n": 32.0,
+        "branch1_n": 48.0,
+        "branch2_n": 20.0,
+        "union_n": 60.0,
+        "kept_n": 16.0,
+        "graph_precision_branch1": 0.4791666666666667,
+        "graph_recall_branch1": 0.71875,
+        "graph_precision_branch2": 0.35,
+        "graph_recall_branch2": 0.21875,
+        "graph_precision_union": 0.43333333333333335,
+        "graph_recall_union": 0.8125,
+        "graph_precision_kept": 0.375,
+        "graph_recall_kept": 0.1875
+      }
+    },
+    {
+      "qid": "5ae54b3d5542990ba0bbb260",
+      "type": "comparison",
+      "question": "Are both American Foxhound and Löwchen types of Foxhounds?",
+      "gold_answer": "no",
+      "sp_gqe_f1": 0.0,
+      "v_rag_f1": 0.0,
+      "seeds": [
+        "american foxhound",
+        "foxhounds",
+        "löwchen"
+      ],
+      "probes": [
+        "American Foxhound and Löwchen types",
+        "Foxhounds"
+      ],
+      "n_hops": 2,
+      "tau": 0.5,
+      "branch1_sparql_nhop": "PREFIX spg: <http://spgqe.local/>\nSELECT DISTINCT ?t WHERE {\n  VALUES ?s { <http://spgqe.local/e#l_wchen> }\n  { ?s spg:coOccurs ?t } UNION\n  { ?s spg:coOccurs/spg:coOccurs ?t }\n}",
+      "branch1_returned": [
+        "1945",
+        "2012",
+        "american foxhound",
+        "foxhounds",
+        "french",
+        "george washington",
+        "german",
+        "löwchen",
+        "the american kennel club",
+        "the marquis de lafayette",
+        "the treeing walker coonhound",
+        "the united kennel club"
+      ],
+      "branch1_returned_n": 12,
+      "branch2_sparql_keyword": "PREFIX spg: <http://spgqe.local/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?e ?label WHERE {\n  ?e a spg:Entity ; rdfs:label ?label .\n  FILTER(CONTAINS(LCASE(STR(?label)), \"american\") || CONTAINS(LCASE(STR(?label)), \"foxhound\") || CONTAINS(LCASE(STR(?label)), \"wchen\") || CONTAINS(LCASE(STR(?label)), \"types\") || CONTAINS(LCASE(STR(?label)), \"foxhounds\"))\n}",
+      "branch2_returned": [
+        "american",
+        "international foxhound association",
+        "löwchen",
+        "tan foxhounds",
+        "tan virginia foxhound",
+        "the american foxhound",
+        "the american kennel club",
+        "the english foxhound",
+        "the international foxhound association",
+        "the masters of foxhounds association",
+        "the trigg foxhound"
+      ],
+      "branch2_returned_n": 11,
+      "union_returned": [
+        "1945",
+        "2012",
+        "american",
+        "american foxhound",
+        "foxhounds",
+        "french",
+        "george washington",
+        "german",
+        "international foxhound association",
+        "löwchen",
+        "tan foxhounds",
+        "tan virginia foxhound",
+        "the american foxhound",
+        "the american kennel club",
+        "the english foxhound",
+        "the international foxhound association",
+        "the marquis de lafayette",
+        "the masters of foxhounds association",
+        "the treeing walker coonhound",
+        "the trigg foxhound",
+        "the united kennel club"
+      ],
+      "returned_n": 21,
+      "per_candidate_similarity": [
+        [
+          "the marquis de lafayette",
+          0.0539
+        ],
+        [
+          "the american foxhound",
+          0.7992
+        ],
+        [
+          "the treeing walker coonhound",
+          0.3782
+        ],
+        [
+          "the american kennel club",
+          0.3729
+        ],
+        [
+          "french",
+          0.2632
+        ],
+        [
+          "george washington",
+          0.1469
+        ],
+        [
+          "american",
+          0.2719
+        ],
+        [
+          "tan virginia foxhound",
+          0.5885
+        ],
+        [
+          "tan foxhounds",
+          0.8254
+        ],
+        [
+          "the trigg foxhound",
+          0.67
+        ],
+        [
+          "1945",
+          0.1562
+        ],
+        [
+          "the international foxhound association",
+          0.7112
+        ],
+        [
+          "international foxhound association",
+          0.6592
+        ],
+        [
+          "2012",
+          0.1896
+        ],
+        [
+          "german",
+          0.3591
+        ],
+        [
+          "the masters of foxhounds association",
+          0.7647
+        ],
+        [
+          "the united kennel club",
+          0.3194
+        ],
+        [
+          "the english foxhound",
+          0.788
+        ]
+      ],
+      "kept_tau": [
+        "american foxhound",
+        "foxhounds",
+        "international foxhound association",
+        "löwchen",
+        "tan foxhounds",
+        "tan virginia foxhound",
+        "the american foxhound",
+        "the english foxhound",
+        "the international foxhound association",
+        "the masters of foxhounds association",
+        "the trigg foxhound"
+      ],
+      "kept_n": 11,
+      "subgraph_spotlight_nodes": [
+        "1945",
+        "2012",
+        "american",
+        "american foxhound",
+        "foxhounds",
+        "french",
+        "george washington",
+        "german",
+        "international foxhound association",
+        "löwchen",
+        "tan foxhounds",
+        "tan virginia foxhound",
+        "the american foxhound",
+        "the american kennel club",
+        "the english foxhound",
+        "the international foxhound association",
+        "the marquis de lafayette",
+        "the masters of foxhounds association",
+        "the treeing walker coonhound",
+        "the trigg foxhound",
+        "the united kennel club"
+      ],
+      "cooccurrence_edges": [
+        [
+          "1945",
+          "2012"
+        ],
+        [
+          "1945",
+          "the american kennel club"
+        ],
+        [
+          "1945",
+          "the treeing walker coonhound"
+        ],
+        [
+          "1945",
+          "the united kennel club"
+        ],
+        [
+          "2012",
+          "the american kennel club"
+        ],
+        [
+          "2012",
+          "the international foxhound association"
+        ],
+        [
+          "2012",
+          "the treeing walker coonhound"
+        ],
+        [
+          "2012",
+          "the united kennel club"
+        ],
+        [
+          "american",
+          "tan virginia foxhound"
+        ],
+        [
+          "american",
+          "the treeing walker coonhound"
+        ],
+        [
+          "french",
+          "george washington"
+        ],
+        [
+          "french",
+          "german"
+        ],
+        [
+          "french",
+          "löwchen"
+        ],
+        [
+          "french",
+          "the marquis de lafayette"
+        ],
+        [
+          "george washington",
+          "the marquis de lafayette"
+        ],
+        [
+          "german",
+          "löwchen"
+        ],
+        [
+          "international foxhound association",
+          "the english foxhound"
+        ],
+        [
+          "löwchen",
+          "the american kennel club"
+        ],
+        [
+          "the american foxhound",
+          "the english foxhound"
+        ],
+        [
+          "the american foxhound",
+          "the trigg foxhound"
+        ],
+        [
+          "the american kennel club",
+          "the treeing walker coonhound"
+        ],
+        [
+          "the american kennel club",
+          "the united kennel club"
+        ],
+        [
+          "the treeing walker coonhound",
+          "the united kennel club"
+        ]
+      ],
+      "entity_uri_by_label": {
+        "the marquis de lafayette": "http://spgqe.local/e#the_marquis_de_lafayette",
+        "the american foxhound": "http://spgqe.local/e#the_american_foxhound",
+        "the treeing walker coonhound": "http://spgqe.local/e#the_treeing_walker_coonhound",
+        "the american kennel club": "http://spgqe.local/e#the_american_kennel_club",
+        "löwchen": "http://spgqe.local/e#l_wchen",
+        "french": "http://spgqe.local/e#french",
+        "george washington": "http://spgqe.local/e#george_washington",
+        "american": "http://spgqe.local/e#american",
+        "the united kennel club": "http://spgqe.local/e#the_united_kennel_club",
+        "tan virginia foxhound": "http://spgqe.local/e#tan_virginia_foxhound",
+        "tan foxhounds": "http://spgqe.local/e#tan_foxhounds",
+        "the trigg foxhound": "http://spgqe.local/e#the_trigg_foxhound",
+        "1945": "http://spgqe.local/e#1945",
+        "international foxhound association": "http://spgqe.local/e#international_foxhound_association",
+        "2012": "http://spgqe.local/e#2012",
+        "german": "http://spgqe.local/e#german",
+        "the masters of foxhounds association": "http://spgqe.local/e#the_masters_of_foxhounds_association",
+        "the international foxhound association": "http://spgqe.local/e#the_international_foxhound_association",
+        "the english foxhound": "http://spgqe.local/e#the_english_foxhound"
+      },
+      "supporting_titles": [
+        "American Foxhound",
+        "Löwchen"
+      ],
+      "supporting_entities": [
+        "american foxhound",
+        "french",
+        "german",
+        "löwchen",
+        "the american foxhound",
+        "the american kennel club",
+        "the english foxhound"
+      ],
+      "validity": {
+        "supporting_entities_n": 7.0,
+        "branch1_n": 12.0,
+        "branch2_n": 11.0,
+        "union_n": 21.0,
+        "kept_n": 11.0,
+        "graph_precision_branch1": 0.4166666666666667,
+        "graph_recall_branch1": 0.7142857142857143,
+        "graph_precision_branch2": 0.36363636363636365,
+        "graph_recall_branch2": 0.5714285714285714,
+        "graph_precision_union": 0.3333333333333333,
+        "graph_recall_union": 1.0,
+        "graph_precision_kept": 0.36363636363636365,
+        "graph_recall_kept": 0.5714285714285714
+      }
+    },
+    {
+      "qid": "5adbf44355429944faac23ce",
+      "type": "bridge",
+      "question": "In which county does the  8th Military Police Brigade  of the United States Army's Barracks located?",
+      "gold_answer": "Honolulu",
+      "sp_gqe_f1": 0.0,
+      "v_rag_f1": 0.0,
+      "seeds": [
+        "8th military police brigade",
+        "barracks",
+        "the united states army's"
+      ],
+      "probes": [
+        "which",
+        "county",
+        "the  8th Military Police Brigade",
+        "the United States Army's Barracks"
+      ],
+      "n_hops": 2,
+      "tau": 0.5,
+      "branch1_sparql_nhop": "PREFIX spg: <http://spgqe.local/>\nSELECT DISTINCT ?t WHERE {\n  VALUES ?s { <http://spgqe.local/e#8th_military_police_brigade> }\n  { ?s spg:coOccurs ?t } UNION\n  { ?s spg:coOccurs/spg:coOccurs ?t }\n}",
+      "branch1_returned": [
+        "8th military police brigade",
+        "barracks",
+        "the pacific ocean",
+        "the united states army's",
+        "united states"
+      ],
+      "branch1_returned_n": 5,
+      "branch2_sparql_keyword": "PREFIX spg: <http://spgqe.local/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?e ?label WHERE {\n  ?e a spg:Entity ; rdfs:label ?label .\n  FILTER(CONTAINS(LCASE(STR(?label)), \"county\") || CONTAINS(LCASE(STR(?label)), \"military\") || CONTAINS(LCASE(STR(?label)), \"police\") || CONTAINS(LCASE(STR(?label)), \"brigade\") || CONTAINS(LCASE(STR(?label)), \"united\") || CONTAINS(LCASE(STR(?label)), \"states\") || CONTAINS(LCASE(STR(?label)), \"army\") || CONTAINS(LCASE(STR(?label)), \"barracks\"))\n}",
+      "branch2_returned": [
+        "16th military police brigade",
+        "18th military police brigade",
+        "49th military police brigade",
+        "8th military police brigade",
+        "army",
+        "army national guard",
+        "military police brigade",
+        "schofield barracks",
+        "sustainment brigade",
+        "the 16th military police brigade",
+        "the 49th military police brigade",
+        "the 709th military police battalion",
+        "the 720th military police battalion",
+        "the 759th military police battalion",
+        "the 89th military police brigade",
+        "the 95th military police battalion",
+        "the city and county",
+        "the united states army",
+        "u.s. army's",
+        "united states",
+        "united states army",
+        "united states army europe",
+        "united states army military police"
+      ],
+      "branch2_returned_n": 23,
+      "union_returned": [
+        "16th military police brigade",
+        "18th military police brigade",
+        "49th military police brigade",
+        "8th military police brigade",
+        "army",
+        "army national guard",
+        "barracks",
+        "military police brigade",
+        "schofield barracks",
+        "sustainment brigade",
+        "the 16th military police brigade",
+        "the 49th military police brigade",
+        "the 709th military police battalion",
+        "the 720th military police battalion",
+        "the 759th military police battalion",
+        "the 89th military police brigade",
+        "the 95th military police battalion",
+        "the city and county",
+        "the pacific ocean",
+        "the united states army",
+        "the united states army's",
+        "u.s. army's",
+        "united states",
+        "united states army",
+        "united states army europe",
+        "united states army military police"
+      ],
+      "returned_n": 26,
+      "per_candidate_similarity": [
+        [
+          "the 95th military police battalion",
+          0.6963
+        ],
+        [
+          "49th military police brigade",
+          0.756
+        ],
+        [
+          "18th military police brigade",
+          0.7271
+        ],
+        [
+          "the 89th military police brigade",
+          0.8726
+        ],
+        [
+          "the pacific ocean",
+          0.213
+        ],
+        [
+          "u.s. army's",
+          0.6904
+        ],
+        [
+          "the 709th military police battalion",
+          0.729
+        ],
+        [
+          "schofield barracks",
+          0.6297
+        ],
+        [
+          "the city and county",
+          0.8184
+        ],
+        [
+          "army",
+          0.6017
+        ],
+        [
+          "united states army military police",
+          0.7218
+        ],
+        [
+          "united states army europe",
+          0.4831
+        ],
+        [
+          "the 759th military police battalion",
+          0.7139
+        ],
+        [
+          "army national guard",
+          0.5847
+        ],
+        [
+          "the 720th military police battalion",
+          0.77
+        ],
+        [
+          "the 49th military police brigade",
+          0.779
+        ],
+        [
+          "united states army",
+          0.6658
+        ],
+        [
+          "the united states army",
+          0.6687
+        ],
+        [
+          "the 16th military police brigade",
+          0.7874
+        ],
+        [
+          "sustainment brigade",
+          0.5732
+        ],
+        [
+          "16th military police brigade",
+          0.7709
+        ],
+        [
+          "united states",
+          0.4045
+        ],
+        [
+          "military police brigade",
+          0.8648
+        ]
+      ],
+      "kept_tau": [
+        "16th military police brigade",
+        "18th military police brigade",
+        "49th military police brigade",
+        "8th military police brigade",
+        "army",
+        "army national guard",
+        "barracks",
+        "military police brigade",
+        "schofield barracks",
+        "sustainment brigade",
+        "the 16th military police brigade",
+        "the 49th military police brigade",
+        "the 709th military police battalion",
+        "the 720th military police battalion",
+        "the 759th military police battalion",
+        "the 89th military police brigade",
+        "the 95th military police battalion",
+        "the city and county",
+        "the united states army",
+        "the united states army's",
+        "u.s. army's",
+        "united states army",
+        "united states army military police"
+      ],
+      "kept_n": 23,
+      "subgraph_spotlight_nodes": [
+        "16th military police brigade",
+        "18th military police brigade",
+        "49th military police brigade",
+        "8th military police brigade",
+        "army",
+        "army national guard",
+        "barracks",
+        "military police brigade",
+        "schofield barracks",
+        "sustainment brigade",
+        "the 16th military police brigade",
+        "the 49th military police brigade",
+        "the 709th military police battalion",
+        "the 720th military police battalion",
+        "the 759th military police battalion",
+        "the 89th military police brigade",
+        "the 95th military police battalion",
+        "the city and county",
+        "the pacific ocean",
+        "the united states army",
+        "the united states army's",
+        "u.s. army's",
+        "united states",
+        "united states army",
+        "united states army europe",
+        "united states army military police"
+      ],
+      "cooccurrence_edges": [
+        [
+          "16th military police brigade",
+          "the united states army"
+        ],
+        [
+          "18th military police brigade",
+          "united states army europe"
+        ],
+        [
+          "49th military police brigade",
+          "the 49th military police brigade"
+        ],
+        [
+          "8th military police brigade",
+          "the pacific ocean"
+        ],
+        [
+          "army",
+          "military police brigade"
+        ],
+        [
+          "army",
+          "the 720th military police battalion"
+        ],
+        [
+          "army national guard",
+          "the 49th military police brigade"
+        ],
+        [
+          "military police brigade",
+          "schofield barracks"
+        ],
+        [
+          "military police brigade",
+          "the united states army"
+        ],
+        [
+          "schofield barracks",
+          "the city and county"
+        ],
+        [
+          "schofield barracks",
+          "the united states army"
+        ],
+        [
+          "schofield barracks",
+          "united states army"
+        ],
+        [
+          "sustainment brigade",
+          "the 89th military police brigade"
+        ],
+        [
+          "the 16th military police brigade",
+          "the united states army"
+        ],
+        [
+          "the 49th military police brigade",
+          "united states"
+        ],
+        [
+          "the 709th military police battalion",
+          "united states army military police"
+        ],
+        [
+          "the 720th military police battalion",
+          "the united states army"
+        ],
+        [
+          "the 759th military police battalion",
+          "the united states army"
+        ],
+        [
+          "the 95th military police battalion",
+          "the united states army"
+        ],
+        [
+          "the city and county",
+          "united states army"
+        ],
+        [
+          "the pacific ocean",
+          "united states"
+        ],
+        [
+          "the united states army",
+          "united states"
+        ],
+        [
+          "united states",
+          "united states army europe"
+        ]
+      ],
+      "entity_uri_by_label": {
+        "the 95th military police battalion": "http://spgqe.local/e#the_95th_military_police_battalion",
+        "49th military police brigade": "http://spgqe.local/e#49th_military_police_brigade",
+        "18th military police brigade": "http://spgqe.local/e#18th_military_police_brigade",
+        "the 89th military police brigade": "http://spgqe.local/e#the_89th_military_police_brigade",
+        "the pacific ocean": "http://spgqe.local/e#the_pacific_ocean",
+        "u.s. army's": "http://spgqe.local/e#u_s_army_s",
+        "the 709th military police battalion": "http://spgqe.local/e#the_709th_military_police_battalion",
+        "schofield barracks": "http://spgqe.local/e#schofield_barracks",
+        "the city and county": "http://spgqe.local/e#the_city_and_county",
+        "army": "http://spgqe.local/e#army",
+        "united states army military police": "http://spgqe.local/e#united_states_army_military_police",
+        "united states army europe": "http://spgqe.local/e#united_states_army_europe",
+        "the 759th military police battalion": "http://spgqe.local/e#the_759th_military_police_battalion",
+        "army national guard": "http://spgqe.local/e#army_national_guard",
+        "the 720th military police battalion": "http://spgqe.local/e#the_720th_military_police_battalion",
+        "8th military police brigade": "http://spgqe.local/e#8th_military_police_brigade",
+        "the 49th military police brigade": "http://spgqe.local/e#the_49th_military_police_brigade",
+        "united states army": "http://spgqe.local/e#united_states_army",
+        "the united states army": "http://spgqe.local/e#the_united_states_army",
+        "the 16th military police brigade": "http://spgqe.local/e#the_16th_military_police_brigade",
+        "sustainment brigade": "http://spgqe.local/e#sustainment_brigade",
+        "16th military police brigade": "http://spgqe.local/e#16th_military_police_brigade",
+        "united states": "http://spgqe.local/e#united_states",
+        "military police brigade": "http://spgqe.local/e#military_police_brigade"
+      },
+      "supporting_titles": [
+        "8th Military Police Brigade (United States)",
+        "Schofield Barracks"
+      ],
+      "supporting_entities": [
+        "1872",
+        "8th",
+        "8th military police brigade",
+        "american",
+        "august 1888 to september 1895",
+        "cdp",
+        "commanding general",
+        "hawaii",
+        "hawaiʻ i.",
+        "honolulu",
+        "john mcallister schofield",
+        "lake wilson",
+        "military police brigade",
+        "pearl harbor",
+        "schofield barracks",
+        "the city and county",
+        "the pacific ocean",
+        "the united states army",
+        "the wahiawa district",
+        "united states",
+        "united states army",
+        "wahiawā",
+        "wahiawā reservoir"
+      ],
+      "validity": {
+        "supporting_entities_n": 23.0,
+        "branch1_n": 5.0,
+        "branch2_n": 23.0,
+        "union_n": 26.0,
+        "kept_n": 23.0,
+        "graph_precision_branch1": 0.6,
+        "graph_recall_branch1": 0.13043478260869565,
+        "graph_precision_branch2": 0.30434782608695654,
+        "graph_recall_branch2": 0.30434782608695654,
+        "graph_precision_union": 0.3076923076923077,
+        "graph_recall_union": 0.34782608695652173,
+        "graph_precision_kept": 0.2608695652173913,
+        "graph_recall_kept": 0.2608695652173913
+      }
+    }
+  ],
+  "graph_query_validity": {
+    "mean_graph_precision_branch1_nhop": 0.4986111111111111,
+    "mean_graph_recall_branch1_nhop": 0.5211568322981367,
+    "mean_graph_precision_branch2_keyword": 0.3393280632411067,
+    "mean_graph_recall_branch2_keyword": 0.364842132505176,
+    "mean_graph_precision_union": 0.3581196581196581,
+    "mean_graph_recall_union": 0.7201086956521738,
+    "mean_graph_precision_kept": 0.33316864295125165,
+    "mean_graph_recall_kept": 0.3399327122153209,
+    "n_questions": 3
+  },
+  "heatmap": {
+    "n_hops": [
+      1,
+      2,
+      3
+    ],
+    "tau": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "mean_f1_grid": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "mean_retrieval_p_at_k_grid": [
+      [
+        0.6,
+        0.5333333333333333,
+        0.5333333333333333,
+        0.6,
+        0.6
+      ],
+      [
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6
+      ],
+      [
+        0.6,
+        0.5333333333333333,
+        0.5333333333333333,
+        0.6,
+        0.6
+      ]
+    ]
+  }
+}

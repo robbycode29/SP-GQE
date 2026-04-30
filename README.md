@@ -7,15 +7,14 @@ Dissertation materials and the full research plan live under `[dissertation/](di
 ## Repository layout
 
 
-| Path                     | Purpose                                                |
-| ------------------------ | ------------------------------------------------------ |
-| `src/sp_gqe/`            | Python package (pip install -e .)                      |
+| Path                     | Purpose                                                       |
+| ------------------------ | ------------------------------------------------------------- |
+| `src/sp_gqe/`            | Python package (pip install -e .)                             |
 | `src/sp_gqe/experiment/` | Hotpot loader, Neo4j graph, Ollama client, pipelines, metrics |
-| `config/experiment.yaml` | Experiment matrix, metrics, dataset sampling           |
-| `data/`                  | HotpotQA and derived artifacts (gitignored when large) |
-| `results/`               | Run outputs and tables                                 |
-| `notebooks/`             | Exploratory work                                       |
-| `dissertation/`          | Plan, preview, notes, professor message                |
+| `config/experiment.yaml` | Experiment matrix, metrics, dataset sampling                  |
+| `data/`                  | HotpotQA and derived artifacts (gitignored when large)        |
+| `results/`               | Run outputs and tables                                        |
+| `notebooks/`             | Exploratory work                                              |
 
 
 ## Prerequisites
@@ -54,7 +53,6 @@ Dissertation materials and the full research plan live under `[dissertation/](di
 - **Protocol and hypotheses**: `dissertation/DISSERTATION_PLAN.md` (Section 3).
 - **Runnable config**: `config/experiment.yaml` — pipelines, run IDs, metrics.
 - **Run** (default: dissertation stack: Neo4j + Ollama when available):
-
   ```powershell
   $env:PYTHONPATH="src"
   docker compose up -d
@@ -62,7 +60,6 @@ Dissertation materials and the full research plan live under `[dissertation/](di
   ollama pull nomic-embed-text
   .\.venv\Scripts\python.exe scripts\run_experiment.py --stack plan --sample-size 150 --out-dir results
   ```
-
   - `--stack plan`: Bolt graph (`Neo4jQuestionGraph`), `nomic-embed-text` embeddings, `mistral` answers, FAISS.
   - `--stack local`: in-memory graph + `all-MiniLM-L6-v2` + extractive answers (fast, no Docker/Ollama).
   - If Ollama is not running, `plan` falls back to MiniLM + extractive (see `plan_fallback` in `results/run_summary.json`).

@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Aggregate all per-seed runs under results/daily_runs/ into a final summary.
+"""Aggregate per-seed runs under results/daily_runs/ into a final summary.
 
 Each file is expected to be produced by scripts/run_experiment.py and contain
 the `pipelines`, `paired_deltas`, `graph_query_log`, and `graph_query_validity`
 keys. Re-running the aggregator after adding more daily seeds is idempotent —
-it simply reads whatever is currently in results/daily_runs/.
+it reads whatever is currently in results/daily_runs/.
+
+By default, files are **deduped** to one row per ``(seed, sample_size)``, keeping
+the latest ``date_utc``, so re-runs replace older JSON for the same seed.
 
 Outputs:
   results/AGGREGATED_SUMMARY.json   machine-readable
@@ -16,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -51,6 +55,21 @@ def _mean_ci_t(values: list[float]) -> tuple[float, tuple[float, float]]:
     return m, (m - h, m + h)
 
 
+def _dedupe_latest_run_dict(runs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """One row per ``(seed, sample_size)``: keep the latest ``date_utc`` (re-runs)."""
+    groups: dict[tuple[int, int], list[dict[str, Any]]] = defaultdict(list)
+    for run in runs:
+        sk = int(run.get("seed", -1))
+        n = int(run.get("sample_size", 0))
+        groups[(sk, n)].append(run)
+    picked: list[dict[str, Any]] = []
+    for key in sorted(groups):
+        items = groups[key]
+        items.sort(key=lambda r: str(r.get("date_utc", "")))
+        picked.append(items[-1])
+    return picked
+
+
 def _bootstrap_ci_mean_diff(
     deltas: list[float], seed: int = 42, n_boot: int = 8000
 ) -> tuple[float, tuple[float, float]]:
@@ -75,6 +94,11 @@ def main() -> None:
         help="Directory with per-seed run JSON files",
     )
     ap.add_argument("--out-dir", type=Path, default=REPO / "results")
+    ap.add_argument(
+        "--no-dedupe",
+        action="store_true",
+        help="Use every JSON file (may double-count the same seed if re-run on different dates)",
+    )
     args = ap.parse_args()
 
     files = sorted(args.daily_dir.glob("*.json"))
@@ -82,12 +106,20 @@ def main() -> None:
         print(f"No per-seed JSON files in {args.daily_dir}", file=sys.stderr)
         sys.exit(1)
 
-    runs: list[dict[str, Any]] = []
+    runs_raw: list[dict[str, Any]] = []
     for p in files:
         try:
-            runs.append(json.loads(p.read_text(encoding="utf-8")))
+            runs_raw.append(json.loads(p.read_text(encoding="utf-8")))
         except Exception as e:
             print(f"[skip] {p.name}: {e}", file=sys.stderr)
+
+    runs = runs_raw if args.no_dedupe else _dedupe_latest_run_dict(runs_raw)
+    if len(runs) < len(runs_raw):
+        print(
+            f"Deduped {len(runs_raw)} files → {len(runs)} unique (seed, sample_size) runs "
+            "(latest date_utc kept).",
+            file=sys.stderr,
+        )
 
     seed_means_f1: dict[str, list[float]] = {k: [] for k in PIPELINE_KEYS}
     seed_means_em: dict[str, list[float]] = {k: [] for k in PIPELINE_KEYS}
@@ -271,6 +303,45 @@ def main() -> None:
         "redundant.",
         "",
     ]
+
+    merged_path = args.out_dir / "merged_heatmap" / "merged_heatmap.json"
+    if merged_path.is_file():
+        try:
+            mh = json.loads(merged_path.read_text(encoding="utf-8"))
+            bf = mh.get("best_mean_answer_f1") or {}
+            bpk = mh.get("best_mean_retrieval_p_at_k") or {}
+            tw = mh.get("total_question_instances_weighted")
+            lines += [
+                "## SP-GQE heatmap grid (merged n × τ)",
+                "",
+                f"*From* `{merged_path.relative_to(REPO).as_posix()}` *— "
+                f"sample-size-weighted mean over contributing seeds "
+                f"(total weight {tw}).*",
+                "",
+                "| Metric | Best n_hops | Best τ | Merged mean |",
+                "|--------|-------------|--------|-------------|",
+            ]
+            if bf.get("n_hops") is not None and bf.get("tau") is not None:
+                lines.append(
+                    f"| Mean answer F1 | {bf['n_hops']} | {bf['tau']} | {bf.get('value', float('nan')):.4f} |"
+                )
+            else:
+                lines.append("| Mean answer F1 | — | — | — |")
+            if bpk.get("n_hops") is not None and bpk.get("tau") is not None:
+                lines.append(
+                    f"| Mean retrieval P@k | {bpk['n_hops']} | {bpk['tau']} | "
+                    f"{bpk.get('value', float('nan')):.4f} |"
+                )
+            else:
+                lines.append("| Mean retrieval P@k | — | — | — |")
+            lines.append("")
+        except (OSError, json.JSONDecodeError, TypeError, KeyError):
+            lines += [
+                "## SP-GQE heatmap grid (merged n × τ)",
+                "",
+                f"*(Could not read `{merged_path}`.)*",
+                "",
+            ]
 
     out_md = args.out_dir / "AGGREGATED_REPORT.md"
     out_md.write_text("\n".join(lines), encoding="utf-8")

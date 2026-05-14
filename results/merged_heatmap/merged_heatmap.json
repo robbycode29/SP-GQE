@@ -1,0 +1,146 @@
+{
+  "n_source_files": 12,
+  "total_question_instances_weighted": 283,
+  "n_hops": [
+    1,
+    2,
+    3
+  ],
+  "tau": [
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7
+  ],
+  "mean_f1_grid": [
+    [
+      0.5360053304971202,
+      0.5612285310675853,
+      0.5533387680550431,
+      0.5670469323445366,
+      0.5375065767441105
+    ],
+    [
+      0.5352073949448247,
+      0.5439350765833181,
+      0.5483716057609218,
+      0.5684389443372554,
+      0.537035434223498
+    ],
+    [
+      0.5343406135126723,
+      0.5553518694488742,
+      0.5398886608822173,
+      0.5693223365634038,
+      0.537035434223498
+    ]
+  ],
+  "mean_retrieval_p_at_k_grid": [
+    [
+      0.6254416961130742,
+      0.623321554770318,
+      0.6325088339222615,
+      0.6473498233215549,
+      0.641696113074205
+    ],
+    [
+      0.6296819787985866,
+      0.626148409893993,
+      0.6275618374558304,
+      0.6466431095406362,
+      0.641696113074205
+    ],
+    [
+      0.6318021201413428,
+      0.6268551236749119,
+      0.6275618374558305,
+      0.6466431095406362,
+      0.641696113074205
+    ]
+  ],
+  "best_mean_answer_f1": {
+    "n_hops": 3,
+    "tau": 0.6,
+    "value": 0.5693223365634038
+  },
+  "best_mean_retrieval_p_at_k": {
+    "n_hops": 1,
+    "tau": 0.6,
+    "value": 0.6473498233215549
+  },
+  "sources": [
+    {
+      "path": "results/daily_runs/2026-05-07__seed42__n25.json",
+      "seed": 42,
+      "sample_size": 25,
+      "date_utc": "2026-05-07"
+    },
+    {
+      "path": "results/daily_runs/2026-05-08__seed43__n25.json",
+      "seed": 43,
+      "sample_size": 25,
+      "date_utc": "2026-05-08"
+    },
+    {
+      "path": "results/daily_runs/2026-05-08__seed44__n25.json",
+      "seed": 44,
+      "sample_size": 25,
+      "date_utc": "2026-05-08"
+    },
+    {
+      "path": "results/daily_runs/2026-05-08__seed45__n25.json",
+      "seed": 45,
+      "sample_size": 25,
+      "date_utc": "2026-05-08"
+    },
+    {
+      "path": "results/daily_runs/2026-05-11__seed46__n25.json",
+      "seed": 46,
+      "sample_size": 25,
+      "date_utc": "2026-05-11"
+    },
+    {
+      "path": "results/daily_runs/2026-05-11__seed47__n25.json",
+      "seed": 47,
+      "sample_size": 25,
+      "date_utc": "2026-05-11"
+    },
+    {
+      "path": "results/daily_runs/2026-05-11__seed48__n15.json",
+      "seed": 48,
+      "sample_size": 15,
+      "date_utc": "2026-05-11"
+    },
+    {
+      "path": "results/daily_runs/2026-05-12__seed49__n25.json",
+      "seed": 49,
+      "sample_size": 25,
+      "date_utc": "2026-05-12"
+    },
+    {
+      "path": "results/daily_runs/2026-05-12__seed50__n25.json",
+      "seed": 50,
+      "sample_size": 25,
+      "date_utc": "2026-05-12"
+    },
+    {
+      "path": "results/daily_runs/2026-05-12__seed51__n25.json",
+      "seed": 51,
+      "sample_size": 25,
+      "date_utc": "2026-05-12"
+    },
+    {
+      "path": "results/daily_runs/2026-05-06__seed65__n18.json",
+      "seed": 65,
+      "sample_size": 18,
+      "date_utc": "2026-05-06"
+    },
+    {
+      "path": "results/daily_runs/2026-05-06__seed66__n25.json",
+      "seed": 66,
+      "sample_size": 25,
+      "date_utc": "2026-05-06"
+    }
+  ]
+}

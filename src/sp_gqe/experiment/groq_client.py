@@ -13,6 +13,7 @@ from typing import Any
 
 import sp_gqe.settings  # noqa: F401 — load `.env` before reading GROQ_API_KEY
 from openai import OpenAI
+from openai import RateLimitError
 
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 DEFAULT_GROQ_MODEL = "llama-3.1-8b-instant"
@@ -212,12 +213,26 @@ def groq_generate(
     _throttle_rpm()
 
     client = _client()
-    r = client.chat.completions.create(
-        model=groq_model(),
-        messages=[{"role": "user", "content": prompt}],
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
+    last_err: Exception | None = None
+    for attempt in range(16):
+        try:
+            r = client.chat.completions.create(
+                model=groq_model(),
+                messages=[{"role": "user", "content": prompt}],
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+            break
+        except RateLimitError as e:
+            last_err = e
+            wait = min(45.0, 2.0 + 1.5 * float(attempt))
+            time.sleep(wait)
+            _tpm_wait_until_room(est)
+            _throttle_rpm()
+    else:
+        assert last_err is not None
+        raise last_err
+
     msg = r.choices[0].message
     text = (msg.content or "").strip()
 

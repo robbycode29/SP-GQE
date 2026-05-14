@@ -4,26 +4,30 @@
 - **Hypothesis:** SP-GQE(n=2,τ=0.5) improves mean token F1 vs V-RAG on bridge (multi-hop) questions; comparison subset is secondary.
 - **Primary metric:** mean_token_f1; **secondary:** answer_exact_match, supporting_title_recall_at_k
 
-- **Seeds:** [58, 59, 60, 61] (4 runs × 25 questions = 100 instances).
+- **Seeds:** [55] (1 runs × 25 questions = 25 instances).
 - **Stack (plan):** Groq API `llama-3.1-8b-instant` generation (T=0), `all-MiniLM-L6-v2` embeddings, RDFLib in-memory per-question RDF graph queried via SPARQL 1.1, FAISS.
 
 ## Aggregated across seeds (mean ± 95% CI on seed-level means)
 
 | Pipeline | Mean F1 | 95% CI | Mean EM | 95% CI | Mean sup. title recall@k | 95% CI |
 |----------|---------|--------|---------|--------|---------------------------|--------|
-| V-RAG | 0.6142 | [0.4853, 0.7431] | 0.4800 | [0.2535, 0.7065] | 0.8350 | [0.7950, 0.8750] |
-| GQE-RAG(n=2) | 0.6310 | [0.4692, 0.7928] | 0.5000 | [0.2535, 0.7465] | 0.8350 | [0.7598, 0.9102] |
-| SP-GQE(n=2,τ=0.5) | 0.6296 | [0.4843, 0.7749] | 0.5000 | [0.2826, 0.7174] | 0.7900 | [0.7582, 0.8218] |
-| SP-GQE-i(n=3,τ=0.5) | 0.6174 | [0.5354, 0.6993] | 0.5100 | [0.3788, 0.6412] | 0.8200 | [0.7619, 0.8781] |
-| GR-RAG | 0.6351 | [0.4879, 0.7822] | 0.5200 | [0.2935, 0.7465] | 0.8350 | [0.7950, 0.8750] |
-| GF-RAG | 0.5678 | [0.3839, 0.7516] | 0.4400 | [0.1908, 0.6892] | 0.7600 | [0.7150, 0.8050] |
+| V-RAG | 0.6454 | [0.6454, 0.6454] | 0.5600 | [0.5600, 0.5600] | 0.8800 | [0.8800, 0.8800] |
+| GQE-RAG(n=2) | 0.7558 | [0.7558, 0.7558] | 0.6000 | [0.6000, 0.6000] | 0.8800 | [0.8800, 0.8800] |
+| SP-GQE(n=2,τ=0.5) | 0.6883 | [0.6883, 0.6883] | 0.6000 | [0.6000, 0.6000] | 0.8400 | [0.8400, 0.8400] |
+| SP-GQE-i(n=3,τ=0.5) | 0.6897 | [0.6897, 0.6897] | 0.5600 | [0.5600, 0.5600] | 0.8400 | [0.8400, 0.8400] |
+| GR-RAG | 0.6474 | [0.6474, 0.6474] | 0.5600 | [0.5600, 0.5600] | 0.8800 | [0.8800, 0.8800] |
+| GF-RAG | 0.6283 | [0.6283, 0.6283] | 0.5200 | [0.5200, 0.5200] | 0.8600 | [0.8600, 0.8600] |
 
 ## Mechanism test (paired SP-GQE − V-RAG on token F1)
 
-- **Bridge (H1):** mean Δ = -0.0252, bootstrap 95% CI [-0.0891, 0.0293], n = 48
-- **Comparison:** mean Δ = 0.0528, bootstrap 95% CI [-0.0184, 0.1321], n = 52
+- **Bridge (H1):** mean Δ = 0.0833, bootstrap 95% CI [0.0000, 0.2500], n = 12
+- **Comparison:** mean Δ = 0.0055, bootstrap 95% CI [-0.0445, 0.0689], n = 13
 
-*Heatmaps skipped (`--no-heatmap` or multi-seed).*
+## SP-GQE heatmaps (n × τ) — seed 55 only
+
+![f1](heatmap_fungi_n_tau.png)
+
+![p_at_k](heatmap_fungi_n_tau_retrieval_p_at_k.png)
 
 ## Positioning vs published RAG / GraphRAG systems
 

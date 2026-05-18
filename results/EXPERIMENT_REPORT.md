@@ -4,26 +4,26 @@
 - **Hypothesis:** SP-GQE(n=2,τ=0.5) improves mean token F1 vs V-RAG on bridge (multi-hop) questions; comparison subset is secondary.
 - **Primary metric:** mean_token_f1; **secondary:** answer_exact_match, supporting_title_recall_at_k
 
-- **Seeds:** [55] (1 runs × 25 questions = 25 instances).
+- **Seeds:** [58] (1 runs × 25 questions = 25 instances).
 - **Stack (plan):** Groq API `llama-3.1-8b-instant` generation (T=0), `all-MiniLM-L6-v2` embeddings, RDFLib in-memory per-question RDF graph queried via SPARQL 1.1, FAISS.
 
 ## Aggregated across seeds (mean ± 95% CI on seed-level means)
 
 | Pipeline | Mean F1 | 95% CI | Mean EM | 95% CI | Mean sup. title recall@k | 95% CI |
 |----------|---------|--------|---------|--------|---------------------------|--------|
-| V-RAG | 0.6454 | [0.6454, 0.6454] | 0.5600 | [0.5600, 0.5600] | 0.8800 | [0.8800, 0.8800] |
-| GQE-RAG(n=2) | 0.7558 | [0.7558, 0.7558] | 0.6000 | [0.6000, 0.6000] | 0.8800 | [0.8800, 0.8800] |
-| SP-GQE(n=2,τ=0.5) | 0.6883 | [0.6883, 0.6883] | 0.6000 | [0.6000, 0.6000] | 0.8400 | [0.8400, 0.8400] |
-| SP-GQE-i(n=3,τ=0.5) | 0.6897 | [0.6897, 0.6897] | 0.5600 | [0.5600, 0.5600] | 0.8400 | [0.8400, 0.8400] |
-| GR-RAG | 0.6474 | [0.6474, 0.6474] | 0.5600 | [0.5600, 0.5600] | 0.8800 | [0.8800, 0.8800] |
-| GF-RAG | 0.6283 | [0.6283, 0.6283] | 0.5200 | [0.5200, 0.5200] | 0.8600 | [0.8600, 0.8600] |
+| V-RAG | 0.6103 | [0.6103, 0.6103] | 0.4000 | [0.4000, 0.4000] | 0.8000 | [0.8000, 0.8000] |
+| GQE-RAG(n=2) | 0.4834 | [0.4834, 0.4834] | 0.3600 | [0.3600, 0.3600] | 0.8200 | [0.8200, 0.8200] |
+| SP-GQE(n=2,τ=0.5) | 0.5615 | [0.5615, 0.5615] | 0.4000 | [0.4000, 0.4000] | 0.7600 | [0.7600, 0.7600] |
+| SP-GQE-i(n=3,τ=0.5) | 0.5120 | [0.5120, 0.5120] | 0.3600 | [0.3600, 0.3600] | 0.7800 | [0.7800, 0.7800] |
+| GR-RAG | 0.5783 | [0.5783, 0.5783] | 0.4000 | [0.4000, 0.4000] | 0.8000 | [0.8000, 0.8000] |
+| GF-RAG | 0.4693 | [0.4693, 0.4693] | 0.2800 | [0.2800, 0.2800] | 0.7200 | [0.7200, 0.7200] |
 
 ## Mechanism test (paired SP-GQE − V-RAG on token F1)
 
-- **Bridge (H1):** mean Δ = 0.0833, bootstrap 95% CI [0.0000, 0.2500], n = 12
-- **Comparison:** mean Δ = 0.0055, bootstrap 95% CI [-0.0445, 0.0689], n = 13
+- **Bridge (H1):** mean Δ = -0.0667, bootstrap 95% CI [-0.2000, 0.0000], n = 12
+- **Comparison:** mean Δ = -0.0322, bootstrap 95% CI [-0.1297, 0.0549], n = 13
 
-## SP-GQE heatmaps (n × τ) — seed 55 only
+## SP-GQE heatmaps (n × τ) — seed 58 only
 
 ![f1](heatmap_fungi_n_tau.png)
 

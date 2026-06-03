@@ -205,38 +205,57 @@ def main() -> None:
         "total_question_instances": total_instances,
         "seeds_used": seeds_used,
         "aggregated_across_seeds": aggregated,
-        "paired_delta_f1_SP_GQE_minus_V_RAG": {
-            "bridge": {
-                "mean": bd_m,
-                "bootstrap_ci95": list(bd_ci),
-                "n_pairs": len(bridge_deltas),
+        "protocol_default_n2_tau05": {
+            "paired_delta_f1_SP_GQE_minus_V_RAG": {
+                "bridge": {
+                    "mean": bd_m,
+                    "bootstrap_ci95": list(bd_ci),
+                    "n_pairs": len(bridge_deltas),
+                },
+                "comparison": {
+                    "mean": cd_m,
+                    "bootstrap_ci95": list(cd_ci),
+                    "n_pairs": len(comp_deltas),
+                },
             },
-            "comparison": {
-                "mean": cd_m,
-                "bootstrap_ci95": list(cd_ci),
-                "n_pairs": len(comp_deltas),
+            "graph_query_validity_pooled": {
+                "branch1_nhop": {
+                    "mean_precision": _mean_or_nan(gv_b1_p),
+                    "mean_recall": _mean_or_nan(gv_b1_r),
+                },
+                "branch2_keyword": {
+                    "mean_precision": _mean_or_nan(gv_b2_p),
+                    "mean_recall": _mean_or_nan(gv_b2_r),
+                },
+                "union": {
+                    "mean_precision": _mean_or_nan(gv_union_p),
+                    "mean_recall": _mean_or_nan(gv_union_r),
+                },
+                "kept_after_tau": {
+                    "mean_precision": _mean_or_nan(gv_kept_p),
+                    "mean_recall": _mean_or_nan(gv_kept_r),
+                },
+                "n_questions": len(gv_b1_p),
             },
-        },
-        "graph_query_validity_pooled": {
-            "branch1_nhop": {
-                "mean_precision": _mean_or_nan(gv_b1_p),
-                "mean_recall": _mean_or_nan(gv_b1_r),
-            },
-            "branch2_keyword": {
-                "mean_precision": _mean_or_nan(gv_b2_p),
-                "mean_recall": _mean_or_nan(gv_b2_r),
-            },
-            "union": {
-                "mean_precision": _mean_or_nan(gv_union_p),
-                "mean_recall": _mean_or_nan(gv_union_r),
-            },
-            "kept_after_tau": {
-                "mean_precision": _mean_or_nan(gv_kept_p),
-                "mean_recall": _mean_or_nan(gv_kept_r),
-            },
-            "n_questions": len(gv_b1_p),
         },
     }
+
+    merged_path = args.out_dir / "merged_heatmap" / "merged_heatmap.json"
+    merged_block: dict[str, Any] | None = None
+    if merged_path.is_file():
+        try:
+            from heatmap_merged_config import compute_merged_config_aggregates
+
+            merged_block = compute_merged_config_aggregates(
+                runs,
+                merged_path,
+                mean_ci_t=_mean_ci_t,
+                bootstrap_ci_mean_diff=_bootstrap_ci_mean_diff,
+                clip01=_clip01,
+            )
+            summary["merged_config_aggregates"] = merged_block
+        except Exception as e:
+            summary["merged_config_aggregates_error"] = str(e)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     out_json = args.out_dir / "AGGREGATED_SUMMARY.json"
@@ -269,25 +288,56 @@ def main() -> None:
             f"{a['n_seeds']} |"
         )
 
+    if merged_block:
+        from heatmap_merged_config import (
+            format_per_pipeline_row,
+            markdown_sections,
+            per_pipeline_rows_at_merged_config,
+        )
+
+        sel = merged_block["selection"]
+        sp_n = merged_block["sp_gqe_at_selected_config"]["n_seeds"]
+        lines += [
+            "",
+            f"*{sel['n_hops']}, τ={sel['tau']} below: **post-hoc argmax** on pooled "
+            f"heatmap mean F1 (not a pre-registered protocol arm). EM / sup-title recall "
+            f"not swept in heatmap runs (—). n={sp_n} heatmap seeds. SP-GQE-i row needs "
+            f"``heatmap_sp_gqe_i`` in daily JSON (added in newer ``run_experiment.py`` "
+            f"runs).*",
+            "",
+        ]
+        for label, row in per_pipeline_rows_at_merged_config(merged_block):
+            lines.append(format_per_pipeline_row(label, row))
+
+        lines.extend(["", *markdown_sections(merged_block)])
+    else:
+        lines += [
+            "",
+            "## SP-GQE at merged-grid selected (n, τ)",
+            "",
+            "*(No `merged_heatmap/merged_heatmap.json` — run `merge_heatmaps.py` first.)*",
+            "",
+            "## Paired ΔF1 / graph-query validity",
+            "",
+            "*(Merged-config sections require merged heatmap.)*",
+            "",
+        ]
+
     lines += [
         "",
-        "## Paired ΔF1 (SP-GQE(n=2, τ=0.5) − V-RAG) pooled across seeds",
+        "## Appendix: protocol default (n=2, τ=0.5)",
+        "",
+        "Logged during experiments before merged-grid selection was applied to "
+        "reporting. Use merged-config sections above as primary when available.",
+        "",
+        "### Paired ΔF1 (SP-GQE(n=2, τ=0.5) − V-RAG), question-level",
         "",
         "| Subset | Mean Δ | Bootstrap 95% CI | n pairs |",
         "|--------|--------|------------------|---------|",
         f"| bridge | {bd_m:.4f} | [{bd_ci[0]:.4f}, {bd_ci[1]:.4f}] | {len(bridge_deltas)} |",
         f"| comparison | {cd_m:.4f} | [{cd_ci[0]:.4f}, {cd_ci[1]:.4f}] | {len(comp_deltas)} |",
         "",
-        "## Graph-query validity (ablation, pooled per question)",
-        "",
-        "*Supporting entities* are spaCy-NER entities extracted from the HotpotQA "
-        "gold supporting paragraphs. Each row evaluates one stage of SP-GQE's "
-        "graph side against that ground truth:",
-        "",
-        "- **Branch 1 (SPARQL n-hop):** structural traversal from seed entities only.",
-        "- **Branch 2 (SPARQL keyword):** keyword-driven lookup over `rdfs:label` only.",
-        "- **Union:** the candidate pool that enters the τ pruner (before pruning).",
-        "- **Kept after τ=0.5:** the entities actually fed into the augmented FAISS query.",
+        "### Graph-query validity (n=2, τ=0.5 log)",
         "",
         "| Stage | Mean precision | Mean recall | n questions |",
         "|-------|----------------|-------------|-------------|",
@@ -296,52 +346,28 @@ def main() -> None:
         f"| Union | {_mean_or_nan(gv_union_p):.4f} | {_mean_or_nan(gv_union_r):.4f} | {len(gv_union_p)} |",
         f"| Kept after τ=0.5 | {_mean_or_nan(gv_kept_p):.4f} | {_mean_or_nan(gv_kept_r):.4f} | {len(gv_kept_p)} |",
         "",
-        "Interpretation: a rise in precision from Union → Kept indicates that the "
-        "cosine-to-reunion pruner is removing noise; any drop in recall is the cost "
-        "of that filtering. Branch 1 vs Branch 2 shows whether the two SPARQL "
-        "queries are complementary (high union recall vs each branch alone) or "
-        "redundant.",
-        "",
     ]
 
-    merged_path = args.out_dir / "merged_heatmap" / "merged_heatmap.json"
-    if merged_path.is_file():
-        try:
-            mh = json.loads(merged_path.read_text(encoding="utf-8"))
-            bf = mh.get("best_mean_answer_f1") or {}
-            bpk = mh.get("best_mean_retrieval_p_at_k") or {}
-            tw = mh.get("total_question_instances_weighted")
-            lines += [
-                "## SP-GQE heatmap grid (merged n × τ)",
-                "",
-                f"*From* `{merged_path.relative_to(REPO).as_posix()}` *— "
-                f"sample-size-weighted mean over contributing seeds "
-                f"(total weight {tw}).*",
-                "",
-                "| Metric | Best n_hops | Best τ | Merged mean |",
-                "|--------|-------------|--------|-------------|",
-            ]
-            if bf.get("n_hops") is not None and bf.get("tau") is not None:
-                lines.append(
-                    f"| Mean answer F1 | {bf['n_hops']} | {bf['tau']} | {bf.get('value', float('nan')):.4f} |"
-                )
-            else:
-                lines.append("| Mean answer F1 | — | — | — |")
-            if bpk.get("n_hops") is not None and bpk.get("tau") is not None:
-                lines.append(
-                    f"| Mean retrieval P@k | {bpk['n_hops']} | {bpk['tau']} | "
-                    f"{bpk.get('value', float('nan')):.4f} |"
-                )
-            else:
-                lines.append("| Mean retrieval P@k | — | — | — |")
-            lines.append("")
-        except (OSError, json.JSONDecodeError, TypeError, KeyError):
-            lines += [
-                "## SP-GQE heatmap grid (merged n × τ)",
-                "",
-                f"*(Could not read `{merged_path}`.)*",
-                "",
-            ]
+    try:
+        from build_heatmap_tuned_comparison import build_comparison
+
+        tuned_payload, tuned_md = build_comparison(
+            runs,
+            merged_heatmap_path=merged_path if merged_path.is_file() else None,
+        )
+        (args.out_dir / "heatmap_tuned_comparison.json").write_text(
+            json.dumps(tuned_payload, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        (args.out_dir / "EXPERIMENT_REPORT_PIPELINE_COMPARISON.md").write_text(
+            "\n".join(tuned_md), encoding="utf-8"
+        )
+        print(
+            f"Wrote {args.out_dir / 'heatmap_tuned_comparison.json'} and "
+            f"{args.out_dir / 'EXPERIMENT_REPORT_PIPELINE_COMPARISON.md'}"
+        )
+    except Exception as e:
+        print(f"[heatmap comparison] {e}", file=sys.stderr)
 
     out_md = args.out_dir / "AGGREGATED_REPORT.md"
     out_md.write_text("\n".join(lines), encoding="utf-8")

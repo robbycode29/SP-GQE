@@ -491,41 +491,320 @@
       "n_seeds": 28
     }
   },
-  "paired_delta_f1_SP_GQE_minus_V_RAG": {
-    "bridge": {
-      "mean": -0.003428304105134469,
-      "bootstrap_ci95": [
-        -0.027877144525372627,
-        0.021102912094434843
-      ],
-      "n_pairs": 327
+  "protocol_default_n2_tau05": {
+    "paired_delta_f1_SP_GQE_minus_V_RAG": {
+      "bridge": {
+        "mean": -0.003428304105134469,
+        "bootstrap_ci95": [
+          -0.027877144525372627,
+          0.021102912094434843
+        ],
+        "n_pairs": 327
+      },
+      "comparison": {
+        "mean": -0.008601965781229008,
+        "bootstrap_ci95": [
+          -0.03752305925987468,
+          0.020173175693045928
+        ],
+        "n_pairs": 353
+      }
     },
-    "comparison": {
-      "mean": -0.008601965781229008,
-      "bootstrap_ci95": [
-        -0.03752305925987468,
-        0.020173175693045928
-      ],
-      "n_pairs": 353
+    "graph_query_validity_pooled": {
+      "branch1_nhop": {
+        "mean_precision": 0.34108474612155726,
+        "mean_recall": 0.5858508206840013
+      },
+      "branch2_keyword": {
+        "mean_precision": 0.3736906226138879,
+        "mean_recall": 0.1668254126595612
+      },
+      "union": {
+        "mean_precision": 0.3092125898126369,
+        "mean_recall": 0.6255512734983261
+      },
+      "kept_after_tau": {
+        "mean_precision": 0.44648014307272155,
+        "mean_recall": 0.21462348724809802
+      },
+      "n_questions": 680
     }
   },
-  "graph_query_validity_pooled": {
-    "branch1_nhop": {
-      "mean_precision": 0.34108474612155726,
-      "mean_recall": 0.5858508206840013
+  "merged_config_aggregates": {
+    "selection": {
+      "criterion": "argmax on merged sample-size-weighted mean_f1_grid",
+      "n_hops": 1,
+      "tau": 0.6,
+      "pooled_mean_f1_on_merged_grid": 0.5765572344876148,
+      "pooled_mean_p_at_k_on_merged_grid": 0.6486206896551724,
+      "merged_total_weight": 580,
+      "merged_n_source_files": 24
     },
-    "branch2_keyword": {
-      "mean_precision": 0.3736906226138879,
-      "mean_recall": 0.1668254126595612
+    "sp_gqe_at_selected_config": {
+      "mean_f1": 0.5777641223089444,
+      "ci95_f1": [
+        0.5500665306460185,
+        0.6054617139718702
+      ],
+      "mean_retrieval_p_at_k": 0.646912457912458,
+      "ci95_retrieval_p_at_k": [
+        0.6309269728680171,
+        0.6628979429568989
+      ],
+      "n_seeds": 24,
+      "per_seed": [
+        {
+          "seed": 42,
+          "sample_size": 25,
+          "date_utc": "2026-05-07",
+          "mean_f1_sp_gqe": 0.5169523809523809,
+          "mean_f1_v_rag": 0.5486984126984126,
+          "delta_f1": -0.03174603174603163,
+          "mean_p_at_k": 0.68
+        },
+        {
+          "seed": 43,
+          "sample_size": 25,
+          "date_utc": "2026-05-08",
+          "mean_f1_sp_gqe": 0.5413333333333333,
+          "mean_f1_v_rag": 0.46285714285714286,
+          "delta_f1": 0.07847619047619048,
+          "mean_p_at_k": 0.648
+        },
+        {
+          "seed": 44,
+          "sample_size": 25,
+          "date_utc": "2026-05-08",
+          "mean_f1_sp_gqe": 0.5393725490196078,
+          "mean_f1_v_rag": 0.6193725490196078,
+          "delta_f1": -0.07999999999999996,
+          "mean_p_at_k": 0.5920000000000001
+        },
+        {
+          "seed": 45,
+          "sample_size": 25,
+          "date_utc": "2026-05-08",
+          "mean_f1_sp_gqe": 0.6533333333333334,
+          "mean_f1_v_rag": 0.6394285714285715,
+          "delta_f1": 0.013904761904761975,
+          "mean_p_at_k": 0.64
+        },
+        {
+          "seed": 46,
+          "sample_size": 25,
+          "date_utc": "2026-05-11",
+          "mean_f1_sp_gqe": 0.44364145658263304,
+          "mean_f1_v_rag": 0.38619047619047614,
+          "delta_f1": 0.0574509803921569,
+          "mean_p_at_k": 0.7440000000000001
+        },
+        {
+          "seed": 47,
+          "sample_size": 25,
+          "date_utc": "2026-05-11",
+          "mean_f1_sp_gqe": 0.6142222222222223,
+          "mean_f1_v_rag": 0.6275555555555556,
+          "delta_f1": -0.013333333333333308,
+          "mean_p_at_k": 0.6960000000000001
+        },
+        {
+          "seed": 48,
+          "sample_size": 15,
+          "date_utc": "2026-05-11",
+          "mean_f1_sp_gqe": 0.6,
+          "mean_f1_v_rag": 0.5333333333333333,
+          "delta_f1": 0.06666666666666665,
+          "mean_p_at_k": 0.5733333333333334
+        },
+        {
+          "seed": 49,
+          "sample_size": 25,
+          "date_utc": "2026-05-12",
+          "mean_f1_sp_gqe": 0.516888888888889,
+          "mean_f1_v_rag": 0.46285714285714286,
+          "delta_f1": 0.0540317460317461,
+          "mean_p_at_k": 0.6800000000000002
+        },
+        {
+          "seed": 50,
+          "sample_size": 25,
+          "date_utc": "2026-05-12",
+          "mean_f1_sp_gqe": 0.5433131313131313,
+          "mean_f1_v_rag": 0.5326464646464646,
+          "delta_f1": 0.010666666666666713,
+          "mean_p_at_k": 0.6080000000000001
+        },
+        {
+          "seed": 51,
+          "sample_size": 25,
+          "date_utc": "2026-05-12",
+          "mean_f1_sp_gqe": 0.6571428571428573,
+          "mean_f1_v_rag": 0.6933333333333332,
+          "delta_f1": -0.036190476190475995,
+          "mean_p_at_k": 0.5920000000000001
+        },
+        {
+          "seed": 52,
+          "sample_size": 25,
+          "date_utc": "2026-05-13",
+          "mean_f1_sp_gqe": 0.6150624378783772,
+          "mean_f1_v_rag": 0.5588037060978237,
+          "delta_f1": 0.05625873178055352,
+          "mean_p_at_k": 0.6560000000000001
+        },
+        {
+          "seed": 53,
+          "sample_size": 25,
+          "date_utc": "2026-05-13",
+          "mean_f1_sp_gqe": 0.562952380952381,
+          "mean_f1_v_rag": 0.564952380952381,
+          "delta_f1": -0.0020000000000000018,
+          "mean_p_at_k": 0.6720000000000002
+        },
+        {
+          "seed": 54,
+          "sample_size": 25,
+          "date_utc": "2026-05-14",
+          "mean_f1_sp_gqe": 0.598857142857143,
+          "mean_f1_v_rag": 0.5588571428571428,
+          "delta_f1": 0.04000000000000015,
+          "mean_p_at_k": 0.632
+        },
+        {
+          "seed": 55,
+          "sample_size": 25,
+          "date_utc": "2026-05-14",
+          "mean_f1_sp_gqe": 0.676952380952381,
+          "mean_f1_v_rag": 0.645447181171319,
+          "delta_f1": 0.03150519978106192,
+          "mean_p_at_k": 0.648
+        },
+        {
+          "seed": 56,
+          "sample_size": 25,
+          "date_utc": "2026-05-18",
+          "mean_f1_sp_gqe": 0.5115555555555555,
+          "mean_f1_v_rag": 0.47422222222222227,
+          "delta_f1": 0.037333333333333274,
+          "mean_p_at_k": 0.6639999999999999
+        },
+        {
+          "seed": 57,
+          "sample_size": 22,
+          "date_utc": "2026-05-18",
+          "mean_f1_sp_gqe": 0.4690430781339872,
+          "mean_f1_v_rag": 0.5671245421245422,
+          "delta_f1": -0.098081463990555,
+          "mean_p_at_k": 0.6454545454545454
+        },
+        {
+          "seed": 58,
+          "sample_size": 25,
+          "date_utc": "2026-05-18",
+          "mean_f1_sp_gqe": 0.5615238095238095,
+          "mean_f1_v_rag": 0.6102857142857143,
+          "delta_f1": -0.048761904761904784,
+          "mean_p_at_k": 0.616
+        },
+        {
+          "seed": 60,
+          "sample_size": 25,
+          "date_utc": "2026-05-19",
+          "mean_f1_sp_gqe": 0.6533333333333333,
+          "mean_f1_v_rag": 0.7333333333333333,
+          "delta_f1": -0.07999999999999996,
+          "mean_p_at_k": 0.68
+        },
+        {
+          "seed": 61,
+          "sample_size": 25,
+          "date_utc": "2026-05-20",
+          "mean_f1_sp_gqe": 0.6266031746031745,
+          "mean_f1_v_rag": 0.5646406926406926,
+          "delta_f1": 0.061962481962481886,
+          "mean_p_at_k": 0.6560000000000001
+        },
+        {
+          "seed": 62,
+          "sample_size": 25,
+          "date_utc": "2026-05-20",
+          "mean_f1_sp_gqe": 0.624,
+          "mean_f1_v_rag": 0.6559999999999999,
+          "delta_f1": -0.03199999999999992,
+          "mean_p_at_k": 0.624
+        },
+        {
+          "seed": 63,
+          "sample_size": 25,
+          "date_utc": "2026-05-21",
+          "mean_f1_sp_gqe": 0.5291428571428571,
+          "mean_f1_v_rag": 0.5119153439153439,
+          "delta_f1": 0.017227513227513258,
+          "mean_p_at_k": 0.6399999999999999
+        },
+        {
+          "seed": 64,
+          "sample_size": 25,
+          "date_utc": "2026-05-21",
+          "mean_f1_sp_gqe": 0.5806060606060607,
+          "mean_f1_v_rag": 0.5406060606060606,
+          "delta_f1": 0.040000000000000036,
+          "mean_p_at_k": 0.6719999999999999
+        },
+        {
+          "seed": 65,
+          "sample_size": 18,
+          "date_utc": "2026-05-21",
+          "mean_f1_sp_gqe": 0.6925925925925925,
+          "mean_f1_v_rag": 0.6555555555555556,
+          "delta_f1": 0.03703703703703698,
+          "mean_p_at_k": 0.6111111111111112
+        },
+        {
+          "seed": 66,
+          "sample_size": 25,
+          "date_utc": "2026-05-06",
+          "mean_f1_sp_gqe": 0.5379139784946236,
+          "mean_f1_v_rag": 0.5276776556776557,
+          "delta_f1": 0.010236322816967958,
+          "mean_p_at_k": 0.6559999999999999
+        }
+      ]
     },
-    "union": {
-      "mean_precision": 0.3092125898126369,
-      "mean_recall": 0.6255512734983261
+    "sp_gqe_i_at_selected_config": null,
+    "paired_delta_f1_seed_level_SP_GQE_minus_V_RAG": {
+      "mean_delta_f1": 0.007943517585618218,
+      "ci95_delta_f1": [
+        -0.013316149060945415,
+        0.02920318423218185
+      ],
+      "n_seeds": 24,
+      "note": "Per-seed delta = heatmap cell F1 at (n*,tau*) minus V-RAG pipeline mean F1 on the same questions. Not question-level bootstrap."
     },
-    "kept_after_tau": {
-      "mean_precision": 0.44648014307272155,
-      "mean_recall": 0.21462348724809802
+    "paired_delta_f1_question_level": {
+      "sp_gqe_arm_in_paired_deltas": "n=2, tau=0.5 (protocol default in daily_runs)",
+      "matches_merged_selection": false,
+      "heatmap_seed_questions_only": true,
+      "bridge": {
+        "mean_delta_f1": -0.01135673903173376,
+        "bootstrap_ci95": [
+          -0.037496499511179046,
+          0.014229694531520898
+        ],
+        "n_pairs": 279
+      },
+      "comparison": {
+        "mean_delta_f1": -0.008481929193822612,
+        "bootstrap_ci95": [
+          -0.039808336710001536,
+          0.022181523699368176
+        ],
+        "n_pairs": 301
+      }
     },
-    "n_questions": 680
+    "graph_query_validity_pooled": null,
+    "logging_matches_selected_config": false,
+    "paired_delta_f1_note": "Merged-grid selected (n=1, tau=0.6). Bridge/comparison rows pool question-level ΔF1 from heatmap seeds where SP-GQE in each pair is still SP-GQE(n=2, τ=0.5) from the experiment log; only the seed-level row uses SP-GQE at (n*, τ*) from the heatmap cell.",
+    "graph_query_validity_note": "Graph-query validity below is recomputed from ``graph_query_log`` at τ=0.6 (cosine prune on stored similarities). Branch 1 n-hop structure in the log was captured at n=2 during the run; merged selection n=1 may differ — see validity section."
   }
 }

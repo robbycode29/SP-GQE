@@ -262,6 +262,8 @@ def run_experiment_once(
     tau_grid = [0.3, 0.4, 0.5, 0.6, 0.7]
     heatmap_f1 = np.zeros((len(n_grid), len(tau_grid)))
     heatmap_pk = np.zeros((len(n_grid), len(tau_grid)))
+    heatmap_i_f1 = np.zeros((len(n_grid), len(tau_grid)))
+    heatmap_i_pk = np.zeros((len(n_grid), len(tau_grid)))
 
     pipeline_f1: dict[str, list[float]] = {k: [] for k in PIPELINE_KEYS}
     pipeline_em: dict[str, list[float]] = {k: [] for k in PIPELINE_KEYS}
@@ -389,6 +391,24 @@ def run_experiment_once(
                         heatmap_pk[i, j] += retrieval_precision_at_k(
                             ctxs, supp, args.top_k
                         )
+                        pred_i, _st_i, ctxs_i = run_pipeline(
+                            "SP-GQE-i",
+                            nlp,
+                            embedder,
+                            q,
+                            ex,
+                            chunk_texts,
+                            kg,
+                            answerer=answerer,
+                            n_hops=n,
+                            tau=tau,
+                            top_k=args.top_k,
+                            retriever=retriever,
+                        )
+                        heatmap_i_f1[i, j] += f1_score(pred_i, gold)
+                        heatmap_i_pk[i, j] += retrieval_precision_at_k(
+                            ctxs_i, supp, args.top_k
+                        )
 
             # RdfQuestionGraph is per-question; no explicit cleanup needed (GC).
 
@@ -446,6 +466,12 @@ def run_experiment_once(
             "tau": tau_grid,
             "mean_f1_grid": (heatmap_f1 / n_q).tolist(),
             "mean_retrieval_p_at_k_grid": (heatmap_pk / n_q).tolist(),
+        }
+        out["heatmap_sp_gqe_i"] = {
+            "n_hops": n_grid,
+            "tau": tau_grid,
+            "mean_f1_grid": (heatmap_i_f1 / n_q).tolist(),
+            "mean_retrieval_p_at_k_grid": (heatmap_i_pk / n_q).tolist(),
         }
 
     return out
